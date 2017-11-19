@@ -41,11 +41,11 @@ public class StudentSubjectEntity {
         this.subjectEntity = subjectEntity;
     }
 
-/*    public GradeEntity getGradeEntity() {
+ public GradeEntity getGradeEntity() {
         return gradeEntity;
     }
 
     public void setGradeEntity(GradeEntity gradeEntity) {
         this.gradeEntity = gradeEntity;
-    }*/
+    }
 }

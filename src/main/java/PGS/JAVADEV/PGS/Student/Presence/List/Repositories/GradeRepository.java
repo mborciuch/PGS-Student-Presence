@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface GradeRepository extends CrudRepository<GradeEntity, Long> {
+    GradeEntity findById(long id);
 }

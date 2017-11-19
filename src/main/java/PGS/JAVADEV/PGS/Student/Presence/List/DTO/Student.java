@@ -12,7 +12,7 @@ public class Student {
 
 
     private Set<Subject> subjects = new HashSet<>();
-    private Set<Presence> presences = new HashSet<>();
+
 
     public Student(){};
     public Student(long id, String firstName, String lastName) {
@@ -53,11 +53,13 @@ public class Student {
         this.subjects = subjects;
     }
 
-    public Set<Presence> getPresences() {
-        return presences;
-    }
-
-    public void setPresences(Set<Presence> presences) {
-        this.presences = presences;
+    @Override
+    public String toString() {
+        return "Student{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", subjects=" + subjects +
+                '}';
     }
 }

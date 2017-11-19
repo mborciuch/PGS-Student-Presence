@@ -17,5 +17,45 @@ public class PresenceEntity {
 
     private String date;
 
+    public PresenceEntity() {
+    }
 
+    public PresenceEntity(boolean presence, String date) {
+        this.presence = presence;
+        this.date = date;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public boolean isPresence() {
+        return presence;
+    }
+
+    public void setPresence(boolean presence) {
+        this.presence = presence;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    @Override
+    public String toString() {
+        return "PresenceEntity{" +
+                "id=" + id +
+                ", studentSubjectEntity=" + studentSubjectEntity +
+                ", presence=" + presence +
+                ", date='" + date + '\'' +
+                '}';
+    }
 }

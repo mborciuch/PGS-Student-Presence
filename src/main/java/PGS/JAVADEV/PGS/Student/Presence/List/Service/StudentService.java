@@ -33,8 +33,8 @@ public class StudentService {
     public void save(Student student){
         studentRepository.save(map(student));
     }
-    public void delete(StudentEntity studentEntity){
-        studentRepository.delete(studentEntity);
+    public void delete(long id){
+        studentRepository.deleteById(id);
     }
 
 

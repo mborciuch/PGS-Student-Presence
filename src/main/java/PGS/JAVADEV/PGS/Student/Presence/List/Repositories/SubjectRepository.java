@@ -6,4 +6,8 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface SubjectRepository extends CrudRepository<SubjectEntity, Long> {
+    SubjectEntity findById(long id);
+    SubjectEntity findByName(String name);
+
+
 }

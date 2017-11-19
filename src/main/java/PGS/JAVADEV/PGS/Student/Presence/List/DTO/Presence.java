@@ -3,6 +3,7 @@ package PGS.JAVADEV.PGS.Student.Presence.List.DTO;
 
 
 public class Presence {
+    private long id;
     private String date;
     private Subject subject ;
     private boolean presence;
@@ -13,6 +14,17 @@ public class Presence {
         this.subject = subject;
         this.presence = presence;
         this.student = student;
+    }
+
+    public Presence() {
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getDate() {
