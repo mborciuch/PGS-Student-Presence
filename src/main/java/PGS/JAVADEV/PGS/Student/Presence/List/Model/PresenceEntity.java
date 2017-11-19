@@ -10,7 +10,7 @@ public class PresenceEntity {
     private long id;
 
     @ManyToOne
-    @JoinColumn(name = "Student_Subject_Entity_id")
+    @JoinColumn(name = "student_subject_entity_id")
     private StudentSubjectEntity studentSubjectEntity;
 
     private boolean presence;

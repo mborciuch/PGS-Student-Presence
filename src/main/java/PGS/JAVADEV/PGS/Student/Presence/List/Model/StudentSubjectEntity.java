@@ -1,6 +1,8 @@
 package PGS.JAVADEV.PGS.Student.Presence.List.Model;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Table
 @Entity
@@ -21,7 +23,7 @@ public class StudentSubjectEntity {
     private GradeEntity gradeEntity;
 
     @OneToMany(mappedBy = "studentSubjectEntity")
-    private PresenceEntity presenceEntity;
+    private Set<PresenceEntity> presenceEntity = new HashSet<>();
 
     public StudentEntity getStudentEntity() {
         return studentEntity;
