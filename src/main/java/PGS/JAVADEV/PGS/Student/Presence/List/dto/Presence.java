@@ -1,4 +1,4 @@
-package PGS.JAVADEV.PGS.Student.Presence.List.DTO;
+package PGS.JAVADEV.PGS.Student.Presence.List.dto;
 
 
 

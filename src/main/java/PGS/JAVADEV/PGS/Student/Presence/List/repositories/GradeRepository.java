@@ -1,6 +1,6 @@
-package PGS.JAVADEV.PGS.Student.Presence.List.Repositories;
+package PGS.JAVADEV.PGS.Student.Presence.List.repositories;
 
-import PGS.JAVADEV.PGS.Student.Presence.List.Model.GradeEntity;
+import PGS.JAVADEV.PGS.Student.Presence.List.model.GradeEntity;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

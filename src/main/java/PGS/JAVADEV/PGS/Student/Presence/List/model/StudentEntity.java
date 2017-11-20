@@ -1,4 +1,4 @@
-package PGS.JAVADEV.PGS.Student.Presence.List.Model;
+package PGS.JAVADEV.PGS.Student.Presence.List.model;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -57,6 +57,14 @@ public class StudentEntity {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public Set<StudentSubjectEntity> getStudentSubjectEntities() {
+        return studentSubjectEntities;
+    }
+
+    public void setStudentSubjectEntities(Set<StudentSubjectEntity> studentSubjectEntities) {
+        this.studentSubjectEntities = studentSubjectEntities;
     }
 
     @Override

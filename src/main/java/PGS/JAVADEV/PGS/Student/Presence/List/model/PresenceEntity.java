@@ -1,4 +1,4 @@
-package PGS.JAVADEV.PGS.Student.Presence.List.Model;
+package PGS.JAVADEV.PGS.Student.Presence.List.model;
 
 import javax.persistence.*;
 

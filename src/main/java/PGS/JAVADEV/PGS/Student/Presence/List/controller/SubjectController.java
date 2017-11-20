@@ -1,15 +1,17 @@
-package PGS.JAVADEV.PGS.Student.Presence.List.Controller;
+package PGS.JAVADEV.PGS.Student.Presence.List.controller;
 
 
-import PGS.JAVADEV.PGS.Student.Presence.List.DTO.Subject;
-import PGS.JAVADEV.PGS.Student.Presence.List.Service.SubjectService;
-import com.google.common.annotations.VisibleForTesting;
+import PGS.JAVADEV.PGS.Student.Presence.List.dto.Subject;
+import PGS.JAVADEV.PGS.Student.Presence.List.service.SubjectService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.ws.rs.Path;
+
+
+
 import java.util.List;
 
 @RestController
@@ -38,9 +40,9 @@ public class  SubjectController {
     }
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<?> createSubject(@RequestBody Subject subject){
-/*        if(subjectService.isSubjectExist(subject)){
+       if(subjectService.isSubjectExist(subject)){
             throw new RuntimeException("Subject Already exist");
-        }*/
+        }
         subjectService.save(subject);
         return new ResponseEntity<Object>(HttpStatus.OK);
     }
@@ -52,6 +54,7 @@ public class  SubjectController {
 
         return new ResponseEntity<Subject>(subject, HttpStatus.OK);
     }
+
 
 
 

@@ -1,6 +1,4 @@
-package PGS.JAVADEV.PGS.Student.Presence.List.Model;
-
-import PGS.JAVADEV.PGS.Student.Presence.List.DTO.Student;
+package PGS.JAVADEV.PGS.Student.Presence.List.model;
 
 import javax.persistence.*;
 import java.util.HashSet;

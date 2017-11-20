@@ -1,4 +1,4 @@
-package PGS.JAVADEV.PGS.Student.Presence.List.Model;
+package PGS.JAVADEV.PGS.Student.Presence.List.model;
 
 public enum GradeEnum {
     A("5"), B("4"), C("3"), D("2"), E("1");

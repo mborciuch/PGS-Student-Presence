@@ -1,8 +1,8 @@
-package PGS.JAVADEV.PGS.Student.Presence.List.Service;
+package PGS.JAVADEV.PGS.Student.Presence.List.service;
 
-import PGS.JAVADEV.PGS.Student.Presence.List.DTO.Subject;
-import PGS.JAVADEV.PGS.Student.Presence.List.Model.SubjectEntity;
-import PGS.JAVADEV.PGS.Student.Presence.List.Repositories.SubjectRepository;
+import PGS.JAVADEV.PGS.Student.Presence.List.dto.Subject;
+import PGS.JAVADEV.PGS.Student.Presence.List.model.SubjectEntity;
+import PGS.JAVADEV.PGS.Student.Presence.List.repositories.SubjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -46,10 +46,7 @@ public class SubjectService {
 
     public boolean isSubjectExist(Subject subject){
         SubjectEntity subjectEntity = subjectRepository.findByName(subject.getName());
-        if(subject != null){
-            return true;
-        }
-        return false;
+       return  subjectEntity != null;
     }
 
     public SubjectEntity map (Subject subject){

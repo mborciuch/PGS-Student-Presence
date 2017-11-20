@@ -1,8 +1,8 @@
-package PGS.JAVADEV.PGS.Student.Presence.List.Service;
+package PGS.JAVADEV.PGS.Student.Presence.List.service;
 
-import PGS.JAVADEV.PGS.Student.Presence.List.DTO.Presence;
-import PGS.JAVADEV.PGS.Student.Presence.List.Model.PresenceEntity;
-import PGS.JAVADEV.PGS.Student.Presence.List.Repositories.PresenceRepository;
+import PGS.JAVADEV.PGS.Student.Presence.List.dto.Presence;
+import PGS.JAVADEV.PGS.Student.Presence.List.model.PresenceEntity;
+import PGS.JAVADEV.PGS.Student.Presence.List.repositories.PresenceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -35,6 +35,13 @@ public class PresenceService {
         presenceRepository.deleteById(id);
     }
 
+/*    public boolean isPresenceExist(Presence presence){
+        PresenceEntity presenceEntity = presenceRepository.findByStudentAndDateAndSubject(presence.getStudent(),presence.getDate(),presence.getSubject());
+        if(presence != null){
+            return true;
+        }
+        return false;
+    }*/
     public PresenceEntity map (Presence presence){
         PresenceEntity presenceEntity = new PresenceEntity();
         presenceEntity.setId(presence.getId());

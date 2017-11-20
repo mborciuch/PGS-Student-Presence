@@ -1,6 +1,6 @@
-package PGS.JAVADEV.PGS.Student.Presence.List.DTO;
+package PGS.JAVADEV.PGS.Student.Presence.List.dto;
 
-import PGS.JAVADEV.PGS.Student.Presence.List.Model.GradeEnum;
+import PGS.JAVADEV.PGS.Student.Presence.List.model.GradeEnum;
 
 public class Grade {
     private long id;

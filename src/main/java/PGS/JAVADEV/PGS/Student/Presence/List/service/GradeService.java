@@ -1,8 +1,8 @@
-package PGS.JAVADEV.PGS.Student.Presence.List.Service;
+package PGS.JAVADEV.PGS.Student.Presence.List.service;
 
-import PGS.JAVADEV.PGS.Student.Presence.List.DTO.Grade;
-import PGS.JAVADEV.PGS.Student.Presence.List.Model.GradeEntity;
-import PGS.JAVADEV.PGS.Student.Presence.List.Repositories.GradeRepository;
+import PGS.JAVADEV.PGS.Student.Presence.List.dto.Grade;
+import PGS.JAVADEV.PGS.Student.Presence.List.model.GradeEntity;
+import PGS.JAVADEV.PGS.Student.Presence.List.repositories.GradeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,7 +32,8 @@ public class GradeService {
         gradeRepository.save(map(grade));
     }
     public void delete(long id){
-        gradeRepository.deleteById(id);
+        gradeRepository.deleteById(id)
+        ;
     }
 
     public GradeEntity map(Grade grade){
