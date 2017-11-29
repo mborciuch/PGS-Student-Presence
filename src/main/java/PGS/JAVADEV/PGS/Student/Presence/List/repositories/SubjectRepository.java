@@ -9,5 +9,8 @@ public interface SubjectRepository extends CrudRepository<SubjectEntity, Long> {
     SubjectEntity findById(long id);
     SubjectEntity findByName(String name);
 
+    SubjectEntity save(SubjectEntity subjectEntity);
+    void deleteByName(String name);
+
 
 }

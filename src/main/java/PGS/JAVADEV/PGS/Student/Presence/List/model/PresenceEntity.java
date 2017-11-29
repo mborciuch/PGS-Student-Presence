@@ -50,6 +50,21 @@ public class PresenceEntity {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        PresenceEntity that = (PresenceEntity) o;
+
+        return id == that.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return (int) (id ^ (id >>> 32));
+    }
+
+    @Override
     public String toString() {
         return "PresenceEntity{" +
                 "id=" + id +

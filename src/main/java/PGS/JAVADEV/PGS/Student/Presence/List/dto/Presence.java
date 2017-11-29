@@ -5,15 +5,11 @@ package PGS.JAVADEV.PGS.Student.Presence.List.dto;
 public class Presence {
     private long id;
     private String date;
-    private Subject subject ;
     private boolean presence;
-    private Student student;
 
-    public Presence(String date, Subject subject, boolean presence, Student student) {
+    public Presence(String date,  boolean presence) {
         this.date = date;
-        this.subject = subject;
         this.presence = presence;
-        this.student = student;
     }
 
     public Presence() {
@@ -35,13 +31,6 @@ public class Presence {
         this.date = date;
     }
 
-    public Subject getSubject() {
-        return subject;
-    }
-
-    public void setSubject(Subject subject) {
-        this.subject = subject;
-    }
 
     public boolean isPresence() {
         return presence;
@@ -51,11 +40,4 @@ public class Presence {
         this.presence = presence;
     }
 
-    public Student getStudent() {
-        return student;
-    }
-
-    public void setStudent(Student student) {
-        this.student = student;
-    }
 }

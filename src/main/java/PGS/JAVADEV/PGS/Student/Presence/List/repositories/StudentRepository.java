@@ -8,4 +8,5 @@ import org.springframework.stereotype.Repository;
 public interface StudentRepository extends CrudRepository<StudentEntity, Long> {
     StudentEntity findById(long id);
     StudentEntity findByFirstNameAndLastName (String firstName, String lastName);
+    void deleteByFirstNameAndLastName(String firstName, String lastName);
 }

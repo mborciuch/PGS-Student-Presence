@@ -6,10 +6,11 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
+
 public class SubjectEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO )
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     private String name;
     private String lecturer;
@@ -27,7 +28,7 @@ public class SubjectEntity {
 
 
 
-    public Long getId() {
+    public long getId() {
         return id;
     }
 

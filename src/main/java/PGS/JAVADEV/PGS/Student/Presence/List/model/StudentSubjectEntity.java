@@ -8,7 +8,7 @@ import java.util.Set;
 @Entity
 public class StudentSubjectEntity {
     @Id
-    @GeneratedValue(strategy =  GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
     @ManyToOne
@@ -18,12 +18,10 @@ public class StudentSubjectEntity {
     @JoinColumn(name="subject_id")
     private SubjectEntity subjectEntity;
 
-    @ManyToOne
-    @JoinColumn(name = "grade_id")
-    private GradeEntity gradeEntity;
-
     @OneToMany(mappedBy = "studentSubjectEntity")
     private Set<PresenceEntity> presenceEntity = new HashSet<>();
+
+    private GradeEnum gradeEnum;
 
     public StudentEntity getStudentEntity() {
         return studentEntity;
@@ -41,11 +39,19 @@ public class StudentSubjectEntity {
         this.subjectEntity = subjectEntity;
     }
 
- public GradeEntity getGradeEntity() {
-        return gradeEntity;
+ public GradeEnum getGradeEnum() {
+        return gradeEnum;
     }
 
-    public void setGradeEntity(GradeEntity gradeEntity) {
-        this.gradeEntity = gradeEntity;
+    public void setGradeEnum(GradeEnum gradeEnum) {
+        this.gradeEnum = gradeEnum;
+    }
+
+    public Set<PresenceEntity> getPresenceEntity() {
+        return presenceEntity;
+    }
+
+    public void setPresenceEntity(Set<PresenceEntity> presenceEntity) {
+        this.presenceEntity = presenceEntity;
     }
 }

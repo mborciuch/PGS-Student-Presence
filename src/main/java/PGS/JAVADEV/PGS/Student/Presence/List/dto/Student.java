@@ -1,7 +1,9 @@
 package PGS.JAVADEV.PGS.Student.Presence.List.dto;
 
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class Student {
@@ -11,7 +13,7 @@ public class Student {
     private String lastName;
 
 
-    private Set<Subject> subjects = new HashSet<>();
+    private Set<StudentSubject> subjects = new HashSet<>();
 
 
     public Student(){};
@@ -45,11 +47,11 @@ public class Student {
         this.lastName = lastName;
     }
 
-    public Set<Subject> getSubjects() {
+    public Set<StudentSubject> getSubjects() {
         return subjects;
     }
 
-    public void setSubjects(Set<Subject> subjects) {
+    public void setSubjects(Set<StudentSubject> subjects) {
         this.subjects = subjects;
     }
 

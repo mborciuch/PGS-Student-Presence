@@ -1,15 +1,16 @@
 package PGS.JAVADEV.PGS.Student.Presence.List.service;
 
 import PGS.JAVADEV.PGS.Student.Presence.List.dto.Student;
-import PGS.JAVADEV.PGS.Student.Presence.List.dto.StudentSubjectGrade;
+import PGS.JAVADEV.PGS.Student.Presence.List.dto.StudentSubject;
 import PGS.JAVADEV.PGS.Student.Presence.List.dto.Subject;
 import PGS.JAVADEV.PGS.Student.Presence.List.model.StudentEntity;
-import PGS.JAVADEV.PGS.Student.Presence.List.model.StudentSubjectEntity;
 import PGS.JAVADEV.PGS.Student.Presence.List.repositories.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -19,71 +20,80 @@ public class StudentService {
     @Autowired
     StudentRepository studentRepository;
 
-    @Autowired
-    SubjectService subjectService;
 
-    @Autowired
-    GradeService gradeService;
-
-
-    public List<Student> findAllStudents(){
+    @Transactional
+    public Set<Student> findAllStudents(){
         Iterable<StudentEntity> studentEntities = studentRepository.findAll();
-        List<Student> students = new ArrayList<>();
+        Set<Student> students = new HashSet<>();
         studentEntities.forEach(student -> students.add(mapStudentToStudentEntity(student)));
         return students;
     }
-
+    @Transactional
     public Student findById(long id){
+        Student student = new Student();
        StudentEntity studentEntity = studentRepository.findById(id);
         if(studentEntity == null) {
             return null;
         }
-        return mapStudentToStudentEntity(studentRepository.findById(id));
+        student = mapStudentToStudentEntity(studentRepository.findById(id));
+        student.setSubjects(getAllSubjects(studentEntity));
+        return student;
+    }
+    public Student findByFirstNameAndLastName(String firstName, String lastName){
+        Student student = new Student();
+        StudentEntity studentEntity = studentRepository.findByFirstNameAndLastName(firstName,lastName );
+        if(studentEntity == null) {
+            return null;
+        }
+        student = mapStudentToStudentEntity(studentRepository.findByFirstNameAndLastName(firstName,lastName ));
+        student.setSubjects(getAllSubjects(studentEntity));
+        return student;
     }
     public void save(Student student){
         studentRepository.save(mapStudentToStudentEntity(student));
     }
-    public void delete(long id){
-        studentRepository.deleteById(id);
+    public void delete(String firstName, String lastName){
+        studentRepository.deleteByFirstNameAndLastName(firstName,lastName);
     }
     public boolean isStudentExist(Student student){
         StudentEntity studentEntity = studentRepository.findByFirstNameAndLastName(student.getFirstName(), student.getLastName());
      return studentEntity != null;
     }
 
-    public List<Subject> getAllStudents(Student student){
-      StudentEntity studentEntity = studentRepository.findById(student.getId());
-      Set<StudentSubjectEntity> studentSubjectEntities = studentEntity.getStudentSubjectEntities();
-      List<Subject> subjects = new ArrayList<>();
-      studentSubjectEntities.forEach(subject -> subjects.add(subjectService.map((subject.getSubjectEntity()))));
-      return subjects;
-    }
 
 
-
-    public Student mapStudentToStudentEntity(StudentEntity studentEntity){
+    private Student mapStudentToStudentEntity(StudentEntity studentEntity){
         Student student = new Student();
+
         student.setFirstName(studentEntity.getFirstName());
         student.setLastName(studentEntity.getLastName());
         student.setId(studentEntity.getId());
+
         return  student;
     }
+    private Set<StudentSubject> getAllSubjects(StudentEntity studentEntity){
+    Set<StudentSubject> studentSubjects = new HashSet<>();
 
-    public StudentEntity mapStudentToStudentEntity(Student student){
+            studentEntity.getStudentSubjectEntities().forEach(el -> {
+                StudentSubject studentSubject = new StudentSubject();
+                studentSubject.setGrade(el.getGradeEnum());
+                studentSubject.setSubjectId(el.getSubjectEntity().getId());
+                studentSubject.setSubjectName(el.getSubjectEntity().getName());
+                studentSubjects.add(studentSubject);
+        });
+            return  studentSubjects;
+
+    }
+
+
+    private StudentEntity mapStudentToStudentEntity(Student student){
         StudentEntity studentEntity = new StudentEntity();
-        student.setFirstName(student.getFirstName());
-        student.setLastName(studentEntity.getLastName());
-        student.setId(studentEntity.getId());
+        studentEntity.setId(student.getId());
+        studentEntity.setFirstName(student.getFirstName());
+        studentEntity.setLastName(student.getLastName());
         return  studentEntity;
 
     }
-    public StudentSubjectGrade mapStudentSubjectEntityToStudentSubjectGrade(StudentSubjectEntity studentSubjectEntity){
-        StudentSubjectGrade studentSubjectGrade = new StudentSubjectGrade();
-        studentSubjectGrade.setStudent(mapStudentToStudentEntity(studentSubjectEntity.getStudentEntity()));
-        studentSubjectGrade.setSubject(subjectService.map(studentSubjectEntity.getSubjectEntity()));
-        studentSubjectGrade.setGrade(gradeService.map(studentSubjectEntity.getGradeEntity()));
 
-        return studentSubjectGrade;
-    }
 
 }

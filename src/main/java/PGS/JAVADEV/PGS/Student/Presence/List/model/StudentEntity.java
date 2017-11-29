@@ -11,6 +11,7 @@ public class StudentEntity {
     private   long id;
     private String firstName;
     private String lastName;
+
     @OneToMany(mappedBy = "studentEntity")
     private Set<StudentSubjectEntity> studentSubjectEntities = new HashSet<>();
 

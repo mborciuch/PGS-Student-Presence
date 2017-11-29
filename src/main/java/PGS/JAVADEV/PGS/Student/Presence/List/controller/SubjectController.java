@@ -1,6 +1,8 @@
 package PGS.JAVADEV.PGS.Student.Presence.List.controller;
 
 
+import PGS.JAVADEV.PGS.Student.Presence.List.dto.Student;
+import PGS.JAVADEV.PGS.Student.Presence.List.dto.StudentSubject;
 import PGS.JAVADEV.PGS.Student.Presence.List.dto.Subject;
 import PGS.JAVADEV.PGS.Student.Presence.List.service.SubjectService;
 
@@ -12,26 +14,37 @@ import org.springframework.web.bind.annotation.*;
 
 
 
-import java.util.List;
+
+import java.util.Set;
 
 @RestController
-@RequestMapping("/pgs/subject")
+@RequestMapping("/pgs/subjects")
 public class  SubjectController {
     @Autowired
     SubjectService subjectService;
 
-    @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<List<Subject>> getAllSubjects(){
+    @Autowired
+    SubjectService studentService;
 
-       List<Subject>  subjects= subjectService.findAllSubjects();
-       return new ResponseEntity<List<Subject>>(subjects, HttpStatus.OK);
+    @RequestMapping(method = RequestMethod.GET)
+    public ResponseEntity<Set<Subject>> getAllSubjects(){
+
+      Set<Subject>  subjects= subjectService.findAllSubjects();
+       return new ResponseEntity<Set<Subject>>(subjects, HttpStatus.OK);
 
     }
-    @RequestMapping(value = "/{subjectId}",method = RequestMethod.GET)
+   @RequestMapping(value = "/{subjectId}",method = RequestMethod.GET)
     public ResponseEntity<?> getSubjectById(@PathVariable("subjectId") long id){
         Subject subject = subjectService.findById(id);
         return  new ResponseEntity<Subject>(subject, HttpStatus.OK);
     }
+@RequestMapping(value = "/{subjectName}",method = RequestMethod.GET)
+    public ResponseEntity<?> getSubjectByName(@PathVariable("subjectName") String name){
+        Subject subject = subjectService.findByName(name);
+        return  new ResponseEntity<Subject>(subject, HttpStatus.OK);
+    }
+
+
     @RequestMapping(value = "/{subjectId}",method = RequestMethod.DELETE)
     public ResponseEntity<?> deleteSubject(@PathVariable("subjectId") long id){
         getSubjectById(id);
@@ -44,9 +57,9 @@ public class  SubjectController {
             throw new RuntimeException("Subject Already exist");
         }
         subjectService.save(subject);
-        return new ResponseEntity<Object>(HttpStatus.OK);
+        return new ResponseEntity<Object>(HttpStatus.CREATED);
     }
-    @RequestMapping(value = "/id",method = RequestMethod.PUT)
+    @RequestMapping(value = "/{id}",method = RequestMethod.PUT)
     public ResponseEntity<?> updateSubject(@PathVariable("id") long id, @RequestBody Subject subject){
         Subject currentSubject = subjectService.findById(id);
         subject.setId(currentSubject.getId());
@@ -54,6 +67,17 @@ public class  SubjectController {
 
         return new ResponseEntity<Subject>(subject, HttpStatus.OK);
     }
+    @RequestMapping(value = "/{studentId}/{subjectId}",method = RequestMethod.POST)
+    public ResponseEntity<?>addStudentToSubject(@PathVariable("studentId") long studentId, @PathVariable("subjectId") long subjectId){
+        subjectService.addStudentToSubject(studentId,subjectId);
+        return new ResponseEntity<Object>( HttpStatus.OK);
+    }
+    @RequestMapping(value = "/grade/{studentId}/{subjectId}",method = RequestMethod.POST)
+    public ResponseEntity<?>addGrade(@PathVariable("studentId") long studentId, @PathVariable("subjectId") long subjectId, @RequestBody StudentSubject studentSubject){
+        subjectService.addGradeToStudent(studentId,subjectId,studentSubject.getGrade());
+        return new ResponseEntity<Object>( HttpStatus.OK);
+    }
+
 
 
 
