@@ -1,5 +1,6 @@
 package PGS.JAVADEV.PGS.Student.Presence.List.service;
 
+import PGS.JAVADEV.PGS.Student.Presence.List.dto.Grade;
 import PGS.JAVADEV.PGS.Student.Presence.List.dto.Student;
 import PGS.JAVADEV.PGS.Student.Presence.List.dto.Subject;
 import PGS.JAVADEV.PGS.Student.Presence.List.model.GradeEnum;
@@ -85,9 +86,9 @@ public class SubjectService {
     }
 
     @Transactional
-    public void addGradeToStudent(long studentId, long subjectId, GradeEnum gradeEnum){
+    public void addGradeToStudent(long studentId, long subjectId, GradeEnum grade){
         StudentSubjectEntity studentSubjectEntity = studentSubjectRepository.findAllByStudentEntityIdAndSubjectEntityId(studentId, subjectId);
-        studentSubjectEntity.setGradeEnum(gradeEnum);
+        studentSubjectEntity.setGradeEnum(grade);
         studentSubjectRepository.save(studentSubjectEntity);
     }
 

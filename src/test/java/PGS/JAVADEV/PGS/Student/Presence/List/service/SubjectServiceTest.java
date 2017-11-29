@@ -1,5 +1,6 @@
 package PGS.JAVADEV.PGS.Student.Presence.List.service;
 
+import PGS.JAVADEV.PGS.Student.Presence.List.dto.Grade;
 import PGS.JAVADEV.PGS.Student.Presence.List.dto.Student;
 import PGS.JAVADEV.PGS.Student.Presence.List.dto.Subject;
 import PGS.JAVADEV.PGS.Student.Presence.List.model.StudentEntity;
@@ -19,10 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 import javax.transaction.Transactional;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 import static PGS.JAVADEV.PGS.Student.Presence.List.model.GradeEnum.A;
 import static org.junit.Assert.*;
@@ -79,20 +77,45 @@ public class SubjectServiceTest {
     @Test
     public void findById() throws Exception {
 
-        SubjectEntity subjectEntityFirst = new SubjectEntity();
-        subjectEntityFirst.setId(1l);
+        //Given
 
-        SubjectEntity subjectEntitySecond = new SubjectEntity();
-        subjectEntitySecond.setId(2l);
+        SubjectEntity subjectEntityFirst = new SubjectEntity();
+        subjectEntityFirst.setId(ID_1);
+
+        StudentEntity studentEntityFirst = new StudentEntity();
+        studentEntityFirst.setId(ID_1);
+
+        StudentEntity studentEntitySecond = new StudentEntity();
+        studentEntityFirst.setId(ID_2);
+
+        StudentSubjectEntity studentSubjectEntityFirst = new StudentSubjectEntity();
+        studentEntityFirst.setId(ID_1);
+        studentSubjectEntityFirst.setSubjectEntity(subjectEntityFirst);
+        studentSubjectEntityFirst.setStudentEntity(studentEntityFirst);
+
+        StudentSubjectEntity studentSubjectEntitySecond = new StudentSubjectEntity();
+        studentEntitySecond.setId(ID_2);
+        studentSubjectEntityFirst.setSubjectEntity(subjectEntityFirst);
+        studentSubjectEntitySecond.setStudentEntity(studentEntitySecond);
+
+        Set<StudentSubjectEntity> studentSubjectEntities = new HashSet<>();
+        studentSubjectEntities.add(studentSubjectEntityFirst);
+        studentSubjectEntities.add(studentSubjectEntitySecond);
+
+        subjectEntityFirst.setStudentSubjectEntities(studentSubjectEntities);
 
         when(subjectRepository.findById(ID_1)).thenReturn(subjectEntityFirst);
-        when(subjectRepository.findById(ID_2)).thenReturn(subjectEntitySecond);
 
-        Subject subjectFirst = subjectService.findById(1l);
-        Subject subjectSecond = subjectService.findById(2l);
+        //When
+
+        Subject subjectFirst = subjectService.findById(ID_1);
+         Set<Student> students =  subjectFirst.getStudents();
+
+         //Then
+
         assertNotNull(subjectFirst);
-        assertNotNull(subjectSecond);
-        verify(subjectRepository, times(2)).findById(1l);
+        assertEquals(2, students.size());
+        verify(subjectRepository, times(2)).findById(ID_1);
     }
 
 
@@ -188,6 +211,8 @@ public class SubjectServiceTest {
 
         StudentEntity studentEntity = new StudentEntity();
         studentEntity.setId(ID_1);
+
+
 
         StudentSubjectEntity studentSubjectEntity = new StudentSubjectEntity();
         studentSubjectEntity.setSubjectEntity(subjectEntity);

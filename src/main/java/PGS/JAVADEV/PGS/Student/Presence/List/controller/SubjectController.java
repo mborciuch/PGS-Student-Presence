@@ -4,6 +4,7 @@ package PGS.JAVADEV.PGS.Student.Presence.List.controller;
 import PGS.JAVADEV.PGS.Student.Presence.List.dto.Student;
 import PGS.JAVADEV.PGS.Student.Presence.List.dto.StudentSubject;
 import PGS.JAVADEV.PGS.Student.Presence.List.dto.Subject;
+import PGS.JAVADEV.PGS.Student.Presence.List.model.SubjectEntity;
 import PGS.JAVADEV.PGS.Student.Presence.List.service.SubjectService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,13 +13,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
-
-
-
+import javax.print.DocFlavor;
 import java.util.Set;
 
+import static PGS.JAVADEV.PGS.Student.Presence.List.controller.SubjectController.BASE_URL;
+
 @RestController
-@RequestMapping("/pgs/subjects")
+@RequestMapping(SubjectController.BASE_URL)
 public class  SubjectController {
     @Autowired
     SubjectService subjectService;
@@ -26,56 +27,68 @@ public class  SubjectController {
     @Autowired
     SubjectService studentService;
 
-    @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<Set<Subject>> getAllSubjects(){
+    public static final String BASE_URL = "/pgs/subjects";
 
-      Set<Subject>  subjects= subjectService.findAllSubjects();
-       return new ResponseEntity<Set<Subject>>(subjects, HttpStatus.OK);
+    @GetMapping
+    @ResponseStatus(HttpStatus.OK)
+    public Set<Subject> getAllSubjects(){
+
+       Set<Subject>  subjects = subjectService.findAllSubjects();
+
+       return subjects;
+
 
     }
-   @RequestMapping(value = "/{subjectId}",method = RequestMethod.GET)
-    public ResponseEntity<?> getSubjectById(@PathVariable("subjectId") long id){
+    @GetMapping({"/{subjectId}"})
+    @ResponseStatus(HttpStatus.OK)
+    public Subject getSubjectById(@PathVariable("subjectId") long id){
         Subject subject = subjectService.findById(id);
-        return  new ResponseEntity<Subject>(subject, HttpStatus.OK);
+        return  subject;
     }
-@RequestMapping(value = "/{subjectName}",method = RequestMethod.GET)
-    public ResponseEntity<?> getSubjectByName(@PathVariable("subjectName") String name){
+
+    @GetMapping({"/byName/{subjectName}"})
+    @ResponseStatus(HttpStatus.OK)
+    public Subject getSubjectByName(@PathVariable("subjectName") String name){
         Subject subject = subjectService.findByName(name);
-        return  new ResponseEntity<Subject>(subject, HttpStatus.OK);
+        return  subject;
     }
 
-
-    @RequestMapping(value = "/{subjectId}",method = RequestMethod.DELETE)
-    public ResponseEntity<?> deleteSubject(@PathVariable("subjectId") long id){
-        getSubjectById(id);
+    @DeleteMapping ({"/{subjectId}"})
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteSubject(@PathVariable("subjectId") long id){
         deleteSubject(id);
-        return  new ResponseEntity<Subject>(HttpStatus.NO_CONTENT);
+
     }
-    @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<?> createSubject(@RequestBody Subject subject){
+
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public void createSubject(@RequestBody Subject subject){
        if(subjectService.isSubjectExist(subject)){
             throw new RuntimeException("Subject Already exist");
         }
         subjectService.save(subject);
-        return new ResponseEntity<Object>(HttpStatus.CREATED);
+
     }
-    @RequestMapping(value = "/{id}",method = RequestMethod.PUT)
-    public ResponseEntity<?> updateSubject(@PathVariable("id") long id, @RequestBody Subject subject){
+    @PutMapping( {"/{subjectId}"})
+    @ResponseStatus(HttpStatus.OK)
+    public void updateSubject(@PathVariable("id") long id, @RequestBody Subject subject){
         Subject currentSubject = subjectService.findById(id);
         subject.setId(currentSubject.getId());
         subjectService.save(subject);
 
-        return new ResponseEntity<Subject>(subject, HttpStatus.OK);
     }
-    @RequestMapping(value = "/{studentId}/{subjectId}",method = RequestMethod.POST)
-    public ResponseEntity<?>addStudentToSubject(@PathVariable("studentId") long studentId, @PathVariable("subjectId") long subjectId){
+
+    @PostMapping ({"/{subjectId}/{studentId}"})
+    @ResponseStatus(HttpStatus.OK)
+    public void addStudentToSubject(@PathVariable("studentId") long studentId, @PathVariable("subjectId") long subjectId){
         subjectService.addStudentToSubject(studentId,subjectId);
-        return new ResponseEntity<Object>( HttpStatus.OK);
     }
-    @RequestMapping(value = "/grade/{studentId}/{subjectId}",method = RequestMethod.POST)
-    public ResponseEntity<?>addGrade(@PathVariable("studentId") long studentId, @PathVariable("subjectId") long subjectId, @RequestBody StudentSubject studentSubject){
+
+    @PostMapping ({"/{studentId}/addGrade"})
+    @ResponseStatus(HttpStatus.OK)
+    public void addGrade(@PathVariable("studentId") long studentId, @PathVariable("subjectId") long subjectId, @RequestBody StudentSubject studentSubject){ ;
         subjectService.addGradeToStudent(studentId,subjectId,studentSubject.getGrade());
-        return new ResponseEntity<Object>( HttpStatus.OK);
+
     }
 
 
