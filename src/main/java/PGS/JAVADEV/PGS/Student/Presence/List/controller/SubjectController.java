@@ -4,6 +4,7 @@ package PGS.JAVADEV.PGS.Student.Presence.List.controller;
 import PGS.JAVADEV.PGS.Student.Presence.List.dto.Student;
 import PGS.JAVADEV.PGS.Student.Presence.List.dto.StudentSubject;
 import PGS.JAVADEV.PGS.Student.Presence.List.dto.Subject;
+import PGS.JAVADEV.PGS.Student.Presence.List.model.GradeEnum;
 import PGS.JAVADEV.PGS.Student.Presence.List.model.SubjectEntity;
 import PGS.JAVADEV.PGS.Student.Presence.List.service.StudentService;
 import PGS.JAVADEV.PGS.Student.Presence.List.service.SubjectService;
@@ -87,10 +88,10 @@ public class  SubjectController {
         subjectService.addStudentToSubject(studentId,subjectId);
     }
 
-    @PostMapping ({"/{studentId}/addGrade"})
+    @PostMapping ({"/{subjectId}/{studentId}/addGrade"})
     @ResponseStatus(HttpStatus.OK)
-    public void addGrade(@PathVariable("studentId") long studentId, @PathVariable("subjectId") long subjectId, @RequestBody StudentSubject studentSubject){ ;
-        subjectService.addGradeToStudent(studentId,subjectId,studentSubject.getGrade());
+    public void addGrade(@PathVariable("studentId") long studentId, @PathVariable("subjectId") long subjectId, @RequestBody GradeEnum gradeEnum){ ;
+        subjectService.addGradeToStudent(studentId,subjectId,gradeEnum);
 
     }
 

@@ -4,7 +4,11 @@ import PGS.JAVADEV.PGS.Student.Presence.List.dto.Student;
 import PGS.JAVADEV.PGS.Student.Presence.List.dto.StudentSubject;
 import PGS.JAVADEV.PGS.Student.Presence.List.dto.Subject;
 import PGS.JAVADEV.PGS.Student.Presence.List.model.StudentEntity;
+import PGS.JAVADEV.PGS.Student.Presence.List.model.StudentSubjectEntity;
+import PGS.JAVADEV.PGS.Student.Presence.List.model.SubjectEntity;
 import PGS.JAVADEV.PGS.Student.Presence.List.repositories.StudentRepository;
+import PGS.JAVADEV.PGS.Student.Presence.List.repositories.StudentsSubjectRepository;
+import PGS.JAVADEV.PGS.Student.Presence.List.repositories.SubjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,9 +21,17 @@ import java.util.Set;
 @Service
 public class StudentService {
 
-    @Autowired
-    StudentRepository studentRepository;
 
+    private final StudentRepository studentRepository;
+    private final SubjectRepository subjectRepository;
+    private final StudentsSubjectRepository studentsSubjectRepository;
+
+
+    public StudentService(StudentRepository studentRepository, SubjectRepository subjectRepository, StudentsSubjectRepository studentSubjectRepository) {
+        this.studentRepository = studentRepository;
+        this.subjectRepository = subjectRepository;
+        this.studentsSubjectRepository = studentSubjectRepository;
+    }
 
     @Transactional
     public Set<Student> findAllStudents(){
@@ -49,15 +61,34 @@ public class StudentService {
         student.setSubjects(getAllSubjects(studentEntity));
         return student;
     }
+     /*   public StudentSubject getSubjects(long studentId){
+
+    }*/
+
     public void save(Student student){
         studentRepository.save(mapStudentToStudentEntity(student));
     }
-    public void delete(String firstName, String lastName){
-        studentRepository.deleteByFirstNameAndLastName(firstName,lastName);
+    public void delete(Long id){
+        studentRepository.findById(id);
     }
     public boolean isStudentExist(Student student){
         StudentEntity studentEntity = studentRepository.findByFirstNameAndLastName(student.getFirstName(), student.getLastName());
      return studentEntity != null;
+    }
+
+    public void addSubjectToStudent(long studentId, long subjectId){
+
+        StudentEntity studentEntity = studentRepository.findById(studentId);
+        SubjectEntity subjectEntity = subjectRepository.findById(subjectId);
+
+        StudentSubjectEntity studentSubjectEntity = new StudentSubjectEntity();
+
+        studentSubjectEntity.setStudentEntity(studentEntity);
+        studentSubjectEntity.setSubjectEntity(subjectEntity);
+
+        studentEntity.getStudentSubjectEntities().add(studentSubjectEntity);
+
+        studentsSubjectRepository.save(studentSubjectEntity);
     }
 
 

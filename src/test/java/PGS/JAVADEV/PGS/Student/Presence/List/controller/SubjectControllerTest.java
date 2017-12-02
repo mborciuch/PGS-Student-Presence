@@ -2,6 +2,7 @@ package PGS.JAVADEV.PGS.Student.Presence.List.controller;
 
 import PGS.JAVADEV.PGS.Student.Presence.List.dto.Student;
 import PGS.JAVADEV.PGS.Student.Presence.List.dto.Subject;
+import PGS.JAVADEV.PGS.Student.Presence.List.model.GradeEnum;
 import PGS.JAVADEV.PGS.Student.Presence.List.model.StudentEntity;
 import PGS.JAVADEV.PGS.Student.Presence.List.model.SubjectEntity;
 import PGS.JAVADEV.PGS.Student.Presence.List.repositories.StudentRepository;
@@ -238,8 +239,26 @@ public class SubjectControllerTest {
     @Test
     public void addGrade() throws Exception {
 
+        StudentEntity studentEntityFirst = new StudentEntity();
+        studentEntityFirst.setId(ID_1);
+        studentEntityFirst.setFirstName(STUDENT1_FIRST_NAME);
+        studentEntityFirst.setLastName(STUDENT1_LAST_NAME);
+        studentEntityFirst.setStudentSubjectEntities(new HashSet<>());
 
-        mockMvc.perform(post(SubjectController.BASE_URL + "/1/addGrade" ))
+        SubjectEntity subjectEntityFirst = new SubjectEntity();
+        subjectEntityFirst.setId(ID_1);
+        subjectEntityFirst.setName(FIRST_SUBJECT);
+        subjectEntityFirst.setLecturer(FIRST_LECTURER);
+        subjectEntityFirst.setStudentSubjectEntities(new HashSet<>());
+
+        GradeEnum gradeEnum = GradeEnum.A;
+
+        when(studentRepository.findById(ID_1)).thenReturn(studentEntityFirst);
+        when(subjectRepository.findById(ID_1)).thenReturn(subjectEntityFirst);
+
+        mockMvc.perform(post(SubjectController.BASE_URL + "/1/1/addGrade" )
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(jsonMapper.writeValueAsString(gradeEnum)))
                 .andExpect(status().isOk());
 
     }

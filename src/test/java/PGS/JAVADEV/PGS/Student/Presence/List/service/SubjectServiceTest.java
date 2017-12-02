@@ -122,14 +122,19 @@ public class SubjectServiceTest {
 
     @Test
     public void findByName() throws Exception {
+
+        //Given
         SubjectEntity subjectEntityFirst = new SubjectEntity();
         subjectEntityFirst.setName(SUBJECT_MATH);
 
 
-
         when(subjectRepository.findByName(SUBJECT_MATH)).thenReturn(subjectEntityFirst);
 
+
+        //When
         Subject subject =subjectService.findByName(SUBJECT_MATH);
+
+        //Then
         assertEquals(subject.getName(),SUBJECT_MATH );
 
     }
@@ -138,7 +143,6 @@ public class SubjectServiceTest {
     public void save() throws Exception {
 
         //Given
-
         Subject subjectFirst = new Subject();
         subjectFirst.setName(SUBJECT_MATH);
 
@@ -146,11 +150,9 @@ public class SubjectServiceTest {
         subjectEntityFirst.setName(subjectFirst.getName());
 
         // When
-
         subjectService.save(subjectFirst);
 
         //then
-
         verify(subjectRepository, times(1)).save(subjectEntityFirst);
         assertEquals(subjectFirst.getName(), subjectEntityFirst.getName());
 
