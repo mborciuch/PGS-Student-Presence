@@ -163,7 +163,7 @@ public class SubjectServiceTest {
     public void delete() throws Exception {
 
         //Given
-        Long id = 1l;
+        Long id = ID_1;
 
         //When
         subjectService.delete(id);

@@ -22,17 +22,17 @@ import java.util.Set;
 public class SubjectService {
 
 
-    SubjectRepository subjectRepository;
+    private final SubjectRepository subjectRepository;
 
-    StudentRepository studentRepository;
+    private final  StudentRepository studentRepository;
 
-    StudentsSubjectRepository studentSubjectRepository;
+   private final StudentsSubjectRepository studentSubjectRepository;
 
 
     public SubjectService(SubjectRepository subjectRepository, StudentRepository studentRepository, StudentsSubjectRepository studentSubjectRepository) {
         this.subjectRepository = subjectRepository;
-        this.studentRepository = studentRepository;
-        this.studentSubjectRepository = studentSubjectRepository;
+       this.studentRepository = studentRepository;
+       this.studentSubjectRepository = studentSubjectRepository;
     }
 
     @Transactional
@@ -81,9 +81,10 @@ public class SubjectService {
     public void addStudentToSubject(long studentId, long subjectId){
         StudentSubjectEntity studentSubjectEntity = new StudentSubjectEntity();
         studentSubjectEntity.setStudentEntity(studentRepository.findById(studentId));
-       studentSubjectEntity.setSubjectEntity(subjectRepository.findById(subjectId));
+        studentSubjectEntity.setSubjectEntity(subjectRepository.findById(subjectId));
        studentSubjectRepository.save(studentSubjectEntity);
     }
+
 
     @Transactional
     public void addGradeToStudent(long studentId, long subjectId, GradeEnum grade){
@@ -91,6 +92,7 @@ public class SubjectService {
         studentSubjectEntity.setGradeEnum(grade);
         studentSubjectRepository.save(studentSubjectEntity);
     }
+
 
 
 
