@@ -11,52 +11,63 @@ import java.util.List;
 import java.util.Set;
 
 @RestController
-@RequestMapping("/pgs/students")
+@RequestMapping(StudentController.BASE_URL)
 public class StudentController {
+
+    public static final String BASE_URL = "/pgs/students";
+
     @Autowired
     StudentService studentService;
 
-    @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<Set<Student>> getAllStudents(){
+    @GetMapping
+    @ResponseStatus(HttpStatus.OK)
+    public Set<Student> getAllStudents(){
 
         Set<Student> students = studentService.findAllStudents();
-        return new ResponseEntity<Set<Student>>(students, HttpStatus.OK);
+        return students;
 
     }
-    @RequestMapping(value = "/{StudentId}",method = RequestMethod.GET)
-    public ResponseEntity<?> getStudentById(@PathVariable("StudentId") long id){
+    @GetMapping({"/{studentId}"})
+    @ResponseStatus(HttpStatus.OK)
+    public Student getStudentById(@PathVariable("studentId") long id){
         Student student = studentService.findById(id);
-        return  new ResponseEntity<Student>(student, HttpStatus.OK);
+        return  student;
     }
-    @RequestMapping(value = "/{firstName/{lastName}",method = RequestMethod.GET)
-    public ResponseEntity<?> getStudentByFirstNameAndLastName(@PathVariable("firstName") String firstName, @PathVariable("lastName") String lastName ){
+    @GetMapping( "/{firstName/{lastName}")
+    @ResponseStatus(HttpStatus.OK)
+    public Student getStudentByFirstNameAndLastName(@PathVariable("firstName") String firstName, @PathVariable("lastName") String lastName ){
         Student student = studentService.findByFirstNameAndLastName(firstName, lastName);
-        return  new ResponseEntity<Student>(student, HttpStatus.OK);
+        return  student;
     }
 
-
-    @RequestMapping(value = "/{firstName/{lastName}",method = RequestMethod.DELETE)
-    public ResponseEntity<?> deleteStudent(@PathVariable("firstName") String firstName, @PathVariable("lastName") String lastName ){
-
-        deleteStudent(firstName,lastName);
-        return  new ResponseEntity<Student>(HttpStatus.NO_CONTENT);
+    @DeleteMapping("/{studentId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteStudentById(@PathVariable("studentId") Long id)
+    {
+        studentService.delete(id);
     }
-    @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<?> createStudent(@RequestBody Student student){
-        if(studentService.isStudentExist(student)){
-            throw new RuntimeException("Student Already exist");
-        }
+
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public void createStudent(@RequestBody Student student){
+
         studentService.save(student);
-        return new ResponseEntity<Object>(HttpStatus.OK);
+
     }
-    @RequestMapping(value = "/{id}",method = RequestMethod.PUT)
-    public ResponseEntity<?> updateStudent(@PathVariable("id") long id, @RequestBody Student student){
+    @PutMapping("/{studentId}")
+    @ResponseStatus(HttpStatus.OK)
+    public void updateStudent(@PathVariable("id") long id, @RequestBody Student student){
         Student currentStudent = studentService.findById(id);
         student.setId(currentStudent.getId());
         studentService.save(student);
 
-        return new ResponseEntity<Student>(student, HttpStatus.OK);
     }
+   @PostMapping("/{studentId}/add/{subjectId}")
+    @ResponseStatus(HttpStatus.OK)
+    public void addSubjectToStudent(@PathVariable("studentId") long studentId, @PathVariable("subjectId") long subjectId){
+        studentService.addSubjectToStudent(studentId,subjectId);
+    }
+
 
 
 }

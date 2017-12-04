@@ -5,6 +5,10 @@ import PGS.JAVADEV.PGS.Student.Presence.List.model.GradeEnum;
 public class StudentSubject {
     private Long subjectId;
     private String subjectName;
+    private String lecturer;
+
+
+
     private GradeEnum grade;
 
     public StudentSubject() {
@@ -38,5 +42,13 @@ public class StudentSubject {
 
     public void setGrade(GradeEnum grade) {
         this.grade = grade;
+    }
+
+    public String getLecturer() {
+        return lecturer;
+    }
+
+    public void setLecturer(String lecturer) {
+        this.lecturer = lecturer;
     }
 }

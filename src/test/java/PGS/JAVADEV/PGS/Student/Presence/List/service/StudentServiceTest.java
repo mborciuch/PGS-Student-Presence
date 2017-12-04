@@ -157,8 +157,6 @@ public class StudentServiceTest {
         verify(studentsSubjectRepository, times(1)).save(any());
     }
 
-    @Test
-    public void isStudentExist() throws Exception {
-    }
+
 
 }

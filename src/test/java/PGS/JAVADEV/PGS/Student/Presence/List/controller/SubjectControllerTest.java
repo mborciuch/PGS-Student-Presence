@@ -15,6 +15,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -77,7 +78,7 @@ public class SubjectControllerTest {
         mockMvc = MockMvcBuilders.standaloneSetup(subjectController)
                 .build();
 
-
+        ArgumentCaptor<Set<Subject>> argumentCaptorSet = ArgumentCaptor.forClass(Set.class);
     }
 
     @Test
@@ -99,12 +100,15 @@ public class SubjectControllerTest {
         subjects.add(subjectFirst);
         subjects.add(subjectSecond);
 
+
         when(subjectService.findAllSubjects()).thenReturn(subjects);
 
-        //When
+        //when //Then
         mockMvc.perform(get(SubjectController.BASE_URL))
                 .andDo(print())
                 .andExpect(status().isOk());
+
+
 
 
     }
@@ -120,7 +124,7 @@ public class SubjectControllerTest {
 
         when(subjectService.findById(ID_1)).thenReturn(subjectFirst);
 
-        //when
+        //when //Then
         mockMvc.perform(get(SubjectController.BASE_URL + "/1"))
                 .andDo(print())
                 .andExpect(status().isOk());
@@ -138,7 +142,7 @@ public class SubjectControllerTest {
         when(subjectService.findByName(FIRST_SUBJECT)).thenReturn(subjectFirst);
 
 
-        //when
+        //when //Then
         mockMvc.perform(get(SubjectController.BASE_URL + "/byName/Matematyka"))
                 .andDo(print())
                 .andExpect(status().isOk());
@@ -148,8 +152,8 @@ public class SubjectControllerTest {
     public void deleteSubject() throws Exception {
 
 
-        mockMvc.perform(delete(SubjectController.BASE_URL + "/1").
-                contentType(MediaType.APPLICATION_JSON))
+        mockMvc.perform(delete(SubjectController.BASE_URL + "/1"))
+
                 .andExpect(status().isNoContent());
 
     }
@@ -163,7 +167,7 @@ public class SubjectControllerTest {
         subjectFirst.setLecturer(FIRST_LECTURER);
         subjectFirst.setStudents(new HashSet<>());
 
-        //When
+        //when //Then
        mockMvc.perform(post(SubjectController.BASE_URL)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(jsonMapper.writeValueAsString(subjectFirst)))
@@ -190,7 +194,7 @@ public class SubjectControllerTest {
 
         when(subjectService.findById(ID_1)).thenReturn(subjectFirst);
 
-        //When
+        //when //Then
         mockMvc.perform(put(SubjectController.BASE_URL + "/1")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(jsonMapper.writeValueAsString(subjectSecond)))
@@ -212,22 +216,12 @@ public class SubjectControllerTest {
         studentFirst.setLastName(STUDENT1_LAST_NAME);
         studentFirst.setSubjects(new HashSet<>());
 
-        StudentEntity studentEntityFirst = new StudentEntity();
-        studentEntityFirst.setId(ID_1);
-        studentEntityFirst.setFirstName(STUDENT1_FIRST_NAME);
-        studentEntityFirst.setLastName(STUDENT1_LAST_NAME);
-        studentEntityFirst.setStudentSubjectEntities(new HashSet<>());
 
-        SubjectEntity subjectEntityFirst = new SubjectEntity();
-        subjectEntityFirst.setId(ID_1);
-        subjectEntityFirst.setName(FIRST_SUBJECT);
-        subjectEntityFirst.setLecturer(FIRST_LECTURER);
-        subjectEntityFirst.setStudentSubjectEntities(new HashSet<>());
+        when(studentService.findById(ID_1)).thenReturn(studentFirst);
+        when(subjectService.findById(ID_1)).thenReturn(subjectFirst);
 
-        when(studentRepository.findById(ID_1)).thenReturn(studentEntityFirst);
-        when(subjectRepository.findById(ID_1)).thenReturn(subjectEntityFirst);
 
-        mockMvc.perform(post(SubjectController.BASE_URL + "/1/1" ))
+        mockMvc.perform(post(SubjectController.BASE_URL + "/" + ID_1 + "/" + ID_1 ))
                 .andExpect(status().isOk());
 
 
@@ -239,22 +233,23 @@ public class SubjectControllerTest {
     @Test
     public void addGrade() throws Exception {
 
-        StudentEntity studentEntityFirst = new StudentEntity();
-        studentEntityFirst.setId(ID_1);
-        studentEntityFirst.setFirstName(STUDENT1_FIRST_NAME);
-        studentEntityFirst.setLastName(STUDENT1_LAST_NAME);
-        studentEntityFirst.setStudentSubjectEntities(new HashSet<>());
+        Subject subjectFirst = new Subject();
+        subjectFirst.setId(ID_1);
+        subjectFirst.setName(FIRST_SUBJECT);
+        subjectFirst.setLecturer(FIRST_LECTURER);
+        subjectFirst.setStudents(new HashSet<>());
 
-        SubjectEntity subjectEntityFirst = new SubjectEntity();
-        subjectEntityFirst.setId(ID_1);
-        subjectEntityFirst.setName(FIRST_SUBJECT);
-        subjectEntityFirst.setLecturer(FIRST_LECTURER);
-        subjectEntityFirst.setStudentSubjectEntities(new HashSet<>());
+        Student studentFirst = new Student();
+        studentFirst.setId(ID_1);
+        studentFirst.setFirstName(STUDENT1_FIRST_NAME);
+        studentFirst.setLastName(STUDENT1_LAST_NAME);
+        studentFirst.setSubjects(new HashSet<>());
 
         GradeEnum gradeEnum = GradeEnum.A;
 
-        when(studentRepository.findById(ID_1)).thenReturn(studentEntityFirst);
-        when(subjectRepository.findById(ID_1)).thenReturn(subjectEntityFirst);
+
+        when(studentService.findById(ID_1)).thenReturn(studentFirst);
+        when(subjectService.findById(ID_1)).thenReturn(subjectFirst);
 
         mockMvc.perform(post(SubjectController.BASE_URL + "/1/1/addGrade" )
                 .contentType(MediaType.APPLICATION_JSON)

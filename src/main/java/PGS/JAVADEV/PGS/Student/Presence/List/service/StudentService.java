@@ -3,6 +3,7 @@ package PGS.JAVADEV.PGS.Student.Presence.List.service;
 import PGS.JAVADEV.PGS.Student.Presence.List.dto.Student;
 import PGS.JAVADEV.PGS.Student.Presence.List.dto.StudentSubject;
 import PGS.JAVADEV.PGS.Student.Presence.List.dto.Subject;
+import PGS.JAVADEV.PGS.Student.Presence.List.model.GradeEnum;
 import PGS.JAVADEV.PGS.Student.Presence.List.model.StudentEntity;
 import PGS.JAVADEV.PGS.Student.Presence.List.model.StudentSubjectEntity;
 import PGS.JAVADEV.PGS.Student.Presence.List.model.SubjectEntity;
@@ -37,7 +38,7 @@ public class StudentService {
     public Set<Student> findAllStudents(){
         Iterable<StudentEntity> studentEntities = studentRepository.findAll();
         Set<Student> students = new HashSet<>();
-        studentEntities.forEach(student -> students.add(mapStudentToStudentEntity(student)));
+        studentEntities.forEach(student -> students.add(mapStudentEntityToStudent(student)));
         return students;
     }
     @Transactional
@@ -47,7 +48,7 @@ public class StudentService {
         if(studentEntity == null) {
             return null;
         }
-        student = mapStudentToStudentEntity(studentRepository.findById(id));
+        student = mapStudentEntityToStudent(studentRepository.findById(id));
         student.setSubjects(getAllSubjects(studentEntity));
         return student;
     }
@@ -57,22 +58,24 @@ public class StudentService {
         if(studentEntity == null) {
             return null;
         }
-        student = mapStudentToStudentEntity(studentRepository.findByFirstNameAndLastName(firstName,lastName ));
+        student = mapStudentEntityToStudent(studentRepository.findByFirstNameAndLastName(firstName,lastName ));
         student.setSubjects(getAllSubjects(studentEntity));
         return student;
     }
-     /*   public StudentSubject getSubjects(long studentId){
 
-    }*/
 
     public void save(Student student){
         studentRepository.save(mapStudentToStudentEntity(student));
     }
+
     public void delete(Long id){
-        studentRepository.findById(id);
+        if(isStudentExist(id)){
+            studentRepository.deleteById(id);
+        }
     }
-    public boolean isStudentExist(Student student){
-        StudentEntity studentEntity = studentRepository.findByFirstNameAndLastName(student.getFirstName(), student.getLastName());
+
+    public boolean isStudentExist(long id){
+        StudentEntity studentEntity = studentRepository.findById(id);
      return studentEntity != null;
     }
 
@@ -93,38 +96,35 @@ public class StudentService {
 
 
 
-    private Student mapStudentToStudentEntity(StudentEntity studentEntity){
-        Student student = new Student();
 
-        student.setFirstName(studentEntity.getFirstName());
-        student.setLastName(studentEntity.getLastName());
-        student.setId(studentEntity.getId());
-
-        return  student;
-    }
     private Set<StudentSubject> getAllSubjects(StudentEntity studentEntity){
     Set<StudentSubject> studentSubjects = new HashSet<>();
-
             studentEntity.getStudentSubjectEntities().forEach(el -> {
                 StudentSubject studentSubject = new StudentSubject();
                 studentSubject.setGrade(el.getGradeEnum());
                 studentSubject.setSubjectId(el.getSubjectEntity().getId());
                 studentSubject.setSubjectName(el.getSubjectEntity().getName());
+                studentSubject.setLecturer(el.getSubjectEntity().getLecturer());
                 studentSubjects.add(studentSubject);
         });
             return  studentSubjects;
-
     }
 
-
+    private Student mapStudentEntityToStudent(StudentEntity studentEntity){
+        Student student = new Student();
+        student.setId(studentEntity.getId());
+        student.setFirstName(studentEntity.getFirstName());
+        student.setLastName(studentEntity.getLastName());
+        return  student;
+    }
     private StudentEntity mapStudentToStudentEntity(Student student){
         StudentEntity studentEntity = new StudentEntity();
         studentEntity.setId(student.getId());
         studentEntity.setFirstName(student.getFirstName());
         studentEntity.setLastName(student.getLastName());
         return  studentEntity;
-
     }
+
 
 
 }
