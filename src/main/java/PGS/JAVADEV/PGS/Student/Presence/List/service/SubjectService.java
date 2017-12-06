@@ -1,6 +1,5 @@
 package PGS.JAVADEV.PGS.Student.Presence.List.service;
 
-import PGS.JAVADEV.PGS.Student.Presence.List.dto.Grade;
 import PGS.JAVADEV.PGS.Student.Presence.List.dto.Student;
 import PGS.JAVADEV.PGS.Student.Presence.List.dto.Subject;
 import PGS.JAVADEV.PGS.Student.Presence.List.model.GradeEnum;
@@ -9,13 +8,10 @@ import PGS.JAVADEV.PGS.Student.Presence.List.model.SubjectEntity;
 import PGS.JAVADEV.PGS.Student.Presence.List.repositories.StudentRepository;
 import PGS.JAVADEV.PGS.Student.Presence.List.repositories.StudentsSubjectRepository;
 import PGS.JAVADEV.PGS.Student.Presence.List.repositories.SubjectRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Service
@@ -35,8 +31,8 @@ public class SubjectService {
        this.studentSubjectRepository = studentSubjectRepository;
     }
 
-    @Transactional
-    public Set<Subject> findAllSubjects(){
+
+    public Set<Subject> findAllSubjects() {
         Iterable<SubjectEntity> subjectEntities = subjectRepository.findAll();
         Set<Subject> subjects = new HashSet<>();
         subjectEntities.forEach(subject -> subjects.add(mapSubjectEntityToSubject(subject)));
@@ -44,7 +40,7 @@ public class SubjectService {
     }
 
 
-    @Transactional
+
     public Subject findById(long id){
         Subject subject = new Subject();
         SubjectEntity subjectEntity = subjectRepository.findById(id);
@@ -56,7 +52,7 @@ public class SubjectService {
         return subject;
     }
 
-    @Transactional
+
     public Subject findByName(String name){
         Subject subject = new Subject();
         SubjectEntity subjectEntity = subjectRepository.findByName(name);
@@ -77,7 +73,7 @@ public class SubjectService {
         subjectRepository.deleteById(id);
     }
 
-    @Transactional
+
     public void addStudentToSubject(long studentId, long subjectId){
         StudentSubjectEntity studentSubjectEntity = new StudentSubjectEntity();
         studentSubjectEntity.setStudentEntity(studentRepository.findById(studentId));
@@ -86,7 +82,7 @@ public class SubjectService {
     }
 
 
-    @Transactional
+
     public void addGradeToStudent(long studentId, long subjectId, GradeEnum grade){
         StudentSubjectEntity studentSubjectEntity = studentSubjectRepository.findAllByStudentEntityIdAndSubjectEntityId(studentId, subjectId);
         studentSubjectEntity.setGradeEnum(grade);

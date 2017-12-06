@@ -1,9 +1,8 @@
 package PGS.JAVADEV.PGS.Student.Presence.List.controller;
 
+
 import PGS.JAVADEV.PGS.Student.Presence.List.dto.Student;
 import PGS.JAVADEV.PGS.Student.Presence.List.dto.Subject;
-import PGS.JAVADEV.PGS.Student.Presence.List.model.StudentEntity;
-import PGS.JAVADEV.PGS.Student.Presence.List.model.SubjectEntity;
 import PGS.JAVADEV.PGS.Student.Presence.List.service.StudentService;
 import PGS.JAVADEV.PGS.Student.Presence.List.service.SubjectService;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -14,7 +13,6 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -54,6 +52,7 @@ public class StudentControllerTest {
     @Before
     public void setUp() throws Exception {
         mockMvc = MockMvcBuilders.standaloneSetup(studentController)
+
                 .build();
     }
 
@@ -185,4 +184,6 @@ public class StudentControllerTest {
       mockMvc.perform(post(StudentController.BASE_URL + "/" + ID_1 + "/add" +   "/" + ID_1))
               .andExpect(status().isOk());
     }
+
+
 }

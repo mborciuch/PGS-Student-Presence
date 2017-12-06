@@ -50,4 +50,14 @@ public class Subject {
     public void setStudents(Set<Student> students) {
         this.students = students;
     }
+
+    @Override
+    public String toString() {
+        return "Subject{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", lecturer='" + lecturer + '\'' +
+                ", students=" + students +
+                '}';
+    }
 }

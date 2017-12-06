@@ -1,6 +1,5 @@
 package PGS.JAVADEV.PGS.Student.Presence.List.service;
 
-import PGS.JAVADEV.PGS.Student.Presence.List.dto.Grade;
 import PGS.JAVADEV.PGS.Student.Presence.List.dto.Student;
 import PGS.JAVADEV.PGS.Student.Presence.List.dto.Subject;
 import PGS.JAVADEV.PGS.Student.Presence.List.model.StudentEntity;
@@ -9,17 +8,13 @@ import PGS.JAVADEV.PGS.Student.Presence.List.model.SubjectEntity;
 import PGS.JAVADEV.PGS.Student.Presence.List.repositories.StudentRepository;
 import PGS.JAVADEV.PGS.Student.Presence.List.repositories.StudentsSubjectRepository;
 import PGS.JAVADEV.PGS.Student.Presence.List.repositories.SubjectRepository;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.mock.mockito.MockBean;
 
-import javax.transaction.Transactional;
 import java.util.*;
 
 import static PGS.JAVADEV.PGS.Student.Presence.List.model.GradeEnum.A;

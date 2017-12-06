@@ -11,14 +11,13 @@ public class Student {
     private  long id;
     private String firstName;
     private String lastName;
-
-
     private Set<StudentSubject> subjects = new HashSet<>();
 
 
-    public Student(){};
-    public Student(long id, String firstName, String lastName) {
-        this.id = id;
+    public Student(){
+
+    };
+    public Student( String firstName, String lastName) {
         this.firstName = firstName;
         this.lastName = lastName;
     }

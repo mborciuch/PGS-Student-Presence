@@ -2,13 +2,15 @@ package PGS.JAVADEV.PGS.Student.Presence.List.dto;
 
 import PGS.JAVADEV.PGS.Student.Presence.List.model.GradeEnum;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public class StudentSubject {
+
     private Long subjectId;
     private String subjectName;
     private String lecturer;
-
-
-
+    private Set<Presence> presences = new HashSet<>();
     private GradeEnum grade;
 
     public StudentSubject() {

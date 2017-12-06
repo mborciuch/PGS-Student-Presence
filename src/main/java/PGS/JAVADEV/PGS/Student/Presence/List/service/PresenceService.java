@@ -21,7 +21,8 @@ public class PresenceService {
 
     @Autowired
     private StudentsSubjectRepository studentsSubjectRepository;
-    @Transactional
+
+
     public Set<Presence> getPresenceByStudentIdAndSubjects(Long studentId, Long subjectId){
         StudentSubjectEntity studentSubjectEntity = studentsSubjectRepository.findAllByStudentEntityIdAndSubjectEntityId(studentId, subjectId);
         Set<PresenceEntity> presenceEntities = studentSubjectEntity.getPresenceEntity();

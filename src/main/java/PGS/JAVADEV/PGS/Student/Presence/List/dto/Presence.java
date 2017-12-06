@@ -1,6 +1,7 @@
 package PGS.JAVADEV.PGS.Student.Presence.List.dto;
 
 
+import java.text.SimpleDateFormat;
 
 public class Presence {
     private long id;
@@ -30,7 +31,6 @@ public class Presence {
     public void setDate(String date) {
         this.date = date;
     }
-
 
     public boolean isPresence() {
         return presence;

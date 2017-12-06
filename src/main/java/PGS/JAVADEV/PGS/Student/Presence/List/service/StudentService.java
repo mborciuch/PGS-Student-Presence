@@ -34,14 +34,15 @@ public class StudentService {
         this.studentsSubjectRepository = studentSubjectRepository;
     }
 
-    @Transactional
-    public Set<Student> findAllStudents(){
-        Iterable<StudentEntity> studentEntities = studentRepository.findAll();
+
+    public Set<Student> findAllStudents() {
+      Iterable<StudentEntity> studentEntities = studentRepository.findAll();
         Set<Student> students = new HashSet<>();
         studentEntities.forEach(student -> students.add(mapStudentEntityToStudent(student)));
         return students;
+
     }
-    @Transactional
+
     public Student findById(long id){
         Student student = new Student();
        StudentEntity studentEntity = studentRepository.findById(id);
@@ -51,6 +52,7 @@ public class StudentService {
         student = mapStudentEntityToStudent(studentRepository.findById(id));
         student.setSubjects(getAllSubjects(studentEntity));
         return student;
+
     }
     public Student findByFirstNameAndLastName(String firstName, String lastName){
         Student student = new Student();
