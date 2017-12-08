@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -29,10 +30,9 @@ public class PresenceService {
         Set<Presence> presences = new HashSet<>();
         presenceEntities.forEach(presence -> presences.add(mapPresenceEntityToPresence(presence)));
         return presences;
-
-
     }
 
+    @Deprecated
     public List<Presence> findAllPresences(){
         Iterable<PresenceEntity> presenceEntities = presenceRepository.findAll();
         List<Presence> presences = new ArrayList<>();
@@ -40,30 +40,29 @@ public class PresenceService {
         return presences;
     }
 
-    public Presence findById(long id){
-        PresenceEntity presenceEntity = presenceRepository.findById(id);
+
+    public Presence findByStudentSubjectAndDate(long subjectId, long studentId, SimpleDateFormat date){
+        PresenceEntity presenceEntity = presenceRepository.findByStudentSubjectEntityAndDate(subjectId,studentId,date);
         if(presenceEntity == null) {
             return null;
         }
-        return mapPresenceEntityToPresence(presenceRepository.findById(id));
+        return mapPresenceEntityToPresence(presenceEntity);
     }
-    public void save(Presence presence){
+    public void save(Presence presence, long studentId, long subjectId){
         presenceRepository.save(mapPresenceToPresenceEntity(presence));
-    }
-    public void delete(long id){
-        presenceRepository.deleteById(id);
+        StudentSubjectEntity studentSubjectEntity = studentsSubjectRepository.findAllByStudentEntityIdAndSubjectEntityId(studentId,subjectId);
+        studentSubjectEntity.getPresenceEntity().add(mapPresenceToPresenceEntity(presence));
     }
 
-    public boolean isPresenceExist(Presence presence){
-        PresenceEntity presenceEntity = presenceRepository.findById(presence.getId());
-        if(presence != null){
-            return true;
-        }
-        return false;
+
+    public void delete(long subjectId, long studentId, SimpleDateFormat date){
+        PresenceEntity currentPresence = presenceRepository.findByStudentSubjectEntityAndDate(subjectId,studentId,date);
+        presenceRepository.delete(currentPresence);
     }
+
+
     private PresenceEntity mapPresenceToPresenceEntity (Presence presence){
         PresenceEntity presenceEntity = new PresenceEntity();
-        presenceEntity.setId(presence.getId());
         presenceEntity.setDate(presence.getDate());
         presenceEntity.setPresence(presence.isPresence());
 

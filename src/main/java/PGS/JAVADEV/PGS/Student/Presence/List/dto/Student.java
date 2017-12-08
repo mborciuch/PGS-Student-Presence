@@ -1,6 +1,7 @@
 package PGS.JAVADEV.PGS.Student.Presence.List.dto;
 
 
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -9,7 +10,9 @@ import java.util.Set;
 public class Student {
 
     private  long id;
+    @NotNull
     private String firstName;
+    @NotNull
     private String lastName;
     private Set<StudentSubject> subjects = new HashSet<>();
 

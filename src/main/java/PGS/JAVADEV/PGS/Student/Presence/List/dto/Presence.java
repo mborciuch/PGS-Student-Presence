@@ -1,14 +1,19 @@
 package PGS.JAVADEV.PGS.Student.Presence.List.dto;
 
 
+import javax.validation.constraints.AssertTrue;
+import javax.validation.constraints.PastOrPresent;
 import java.text.SimpleDateFormat;
 
 public class Presence {
     private long id;
-    private String date;
+
+    @PastOrPresent
+    private SimpleDateFormat date;
+
     private boolean presence;
 
-    public Presence(String date,  boolean presence) {
+    public Presence(SimpleDateFormat date,  boolean presence) {
         this.date = date;
         this.presence = presence;
     }
@@ -24,11 +29,11 @@ public class Presence {
         this.id = id;
     }
 
-    public String getDate() {
+    public SimpleDateFormat getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(SimpleDateFormat date) {
         this.date = date;
     }
 

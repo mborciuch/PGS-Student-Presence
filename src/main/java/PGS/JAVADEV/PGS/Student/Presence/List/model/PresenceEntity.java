@@ -1,6 +1,7 @@
 package PGS.JAVADEV.PGS.Student.Presence.List.model;
 
 import javax.persistence.*;
+import java.text.SimpleDateFormat;
 
 @Entity
 public class PresenceEntity {
@@ -15,12 +16,12 @@ public class PresenceEntity {
 
     private boolean presence;
 
-    private String date;
+    private SimpleDateFormat date;
 
     public PresenceEntity() {
     }
 
-    public PresenceEntity(boolean presence, String date) {
+    public PresenceEntity(boolean presence, SimpleDateFormat date) {
         this.presence = presence;
         this.date = date;
     }
@@ -41,11 +42,11 @@ public class PresenceEntity {
         this.presence = presence;
     }
 
-    public String getDate() {
+    public SimpleDateFormat getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(SimpleDateFormat date) {
         this.date = date;
     }
 
