@@ -4,25 +4,26 @@ import PGS.JAVADEV.PGS.Student.Presence.List.dto.Student;
 import PGS.JAVADEV.PGS.Student.Presence.List.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.Set;
 
 @RestController
 @RequestMapping(StudentController.BASE_URL)
 public class StudentController {
 
-    public static final String BASE_URL = "/pgs/students";
+    public static final String BASE_URL = "/students";
 
     @Autowired
     StudentService studentService;
 
+
+
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public Set<Student> getAllStudents(){
-
         Set<Student> students = studentService.findAllStudents();
         return students;
 
@@ -30,6 +31,7 @@ public class StudentController {
     @GetMapping({"/{studentId}"})
     @ResponseStatus(HttpStatus.OK)
     public Student getStudentById(@PathVariable("studentId") long id){
+        Authentication authentication =  SecurityContextHolder.getContext().getAuthentication();
         Student student = studentService.findById(id);
         return  student;
     }
@@ -50,7 +52,7 @@ public class StudentController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public void createStudent(@RequestBody Student student){
-
+        if(!studentService.isStudentExist(student))
         studentService.save(student);
 
     }

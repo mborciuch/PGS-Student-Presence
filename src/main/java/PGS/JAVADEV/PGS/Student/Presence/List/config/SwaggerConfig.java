@@ -18,17 +18,16 @@ public class SwaggerConfig {
     public Docket productApi() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()                 .apis(RequestHandlerSelectors.basePackage("PGS.JAVADEV.PGS.Student.Presence.List"))
-               // .paths(regex("/product.*"))
                 .build()
                 .apiInfo(metaData());
     }
     private ApiInfo metaData() {
         ApiInfo apiInfo = new ApiInfo(
-                "Spring Boot REST API",
-                "Spring Boot REST API for Online Store",
+                "PGS Presence List",
+                "Spring Boot REST API for Student Presence",
                 "1.0",
                 "Terms of service",
-                new Contact("John Thompson", "https://springframework.guru/about/", "john@springfrmework.guru"),
+                new Contact("Michał Borciuch", "/", "michal123borciuch@gmail.com"),
                 "Apache License Version 2.0",
                 "https://www.apache.org/licenses/LICENSE-2.0");
 

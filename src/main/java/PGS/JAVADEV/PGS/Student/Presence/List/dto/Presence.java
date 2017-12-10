@@ -8,12 +8,12 @@ import java.text.SimpleDateFormat;
 public class Presence {
     private long id;
 
-    @PastOrPresent
-    private SimpleDateFormat date;
+
+    private String date;
 
     private boolean presence;
 
-    public Presence(SimpleDateFormat date,  boolean presence) {
+    public Presence(String date,  boolean presence) {
         this.date = date;
         this.presence = presence;
     }
@@ -29,11 +29,11 @@ public class Presence {
         this.id = id;
     }
 
-    public SimpleDateFormat getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(SimpleDateFormat date) {
+    public void setDate(String date) {
         this.date = date;
     }
 

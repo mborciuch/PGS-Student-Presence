@@ -41,8 +41,10 @@ public class PresenceService {
     }
 
 
-    public Presence findByStudentSubjectAndDate(long subjectId, long studentId, SimpleDateFormat date){
-        PresenceEntity presenceEntity = presenceRepository.findByStudentSubjectEntityAndDate(subjectId,studentId,date);
+    public Presence findByStudentSubjectAndDate(long subjectId, long studentId, String date){
+        StudentSubjectEntity studentSubjectEntity = studentsSubjectRepository
+                .findAllByStudentEntityIdAndSubjectEntityId(studentId,subjectId);
+        PresenceEntity presenceEntity = presenceRepository.findByStudentSubjectEntityAndDate(studentSubjectEntity,date);
         if(presenceEntity == null) {
             return null;
         }
@@ -50,13 +52,16 @@ public class PresenceService {
     }
     public void save(Presence presence, long studentId, long subjectId){
         presenceRepository.save(mapPresenceToPresenceEntity(presence));
-        StudentSubjectEntity studentSubjectEntity = studentsSubjectRepository.findAllByStudentEntityIdAndSubjectEntityId(studentId,subjectId);
+        StudentSubjectEntity studentSubjectEntity = studentsSubjectRepository
+                .findAllByStudentEntityIdAndSubjectEntityId(studentId,subjectId);
         studentSubjectEntity.getPresenceEntity().add(mapPresenceToPresenceEntity(presence));
     }
 
 
-    public void delete(long subjectId, long studentId, SimpleDateFormat date){
-        PresenceEntity currentPresence = presenceRepository.findByStudentSubjectEntityAndDate(subjectId,studentId,date);
+    public void delete(long subjectId, long studentId, String date){
+        StudentSubjectEntity studentSubjectEntity = studentsSubjectRepository
+                .findAllByStudentEntityIdAndSubjectEntityId(studentId,subjectId);
+        PresenceEntity currentPresence = presenceRepository.findByStudentSubjectEntityAndDate(studentSubjectEntity,date);
         presenceRepository.delete(currentPresence);
     }
 

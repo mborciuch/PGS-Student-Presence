@@ -11,7 +11,9 @@ import java.text.SimpleDateFormat;
 
 @Repository
 public interface PresenceRepository extends CrudRepository<PresenceEntity, Long> {
+
     PresenceEntity findById(long id);
-    PresenceEntity findByStudentSubjectEntityAndDate(long subjectId, long studentId, SimpleDateFormat dateFormat);
+
+    PresenceEntity findByStudentSubjectEntityAndDate (StudentSubjectEntity studentSubjectEntity, String date);
 }
 

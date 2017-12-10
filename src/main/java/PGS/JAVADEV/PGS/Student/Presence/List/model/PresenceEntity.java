@@ -16,12 +16,12 @@ public class PresenceEntity {
 
     private boolean presence;
 
-    private SimpleDateFormat date;
+    private String date;
 
     public PresenceEntity() {
     }
 
-    public PresenceEntity(boolean presence, SimpleDateFormat date) {
+    public PresenceEntity(boolean presence, String date) {
         this.presence = presence;
         this.date = date;
     }
@@ -42,11 +42,11 @@ public class PresenceEntity {
         this.presence = presence;
     }
 
-    public SimpleDateFormat getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(SimpleDateFormat date) {
+    public void setDate(String date) {
         this.date = date;
     }
 

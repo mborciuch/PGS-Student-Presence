@@ -19,7 +19,7 @@ import static PGS.JAVADEV.PGS.Student.Presence.List.controller.PresenceControlle
 public class PresenceController {
 
 
-    public static final String BASE_URL = "/pgs/presences";
+    public static final String BASE_URL = "/presences";
 
     @Autowired
     PresenceService presenceService;
@@ -34,7 +34,7 @@ public class PresenceController {
     @RequestMapping({"/{subjectId}/{studentId}"})
     public Set<Presence> getPresenceOfStudentFromSubject(@PathVariable("subjectId") long subjectId, @PathVariable("subjectId") long studentId ){
         Set<Presence> presences = presenceService.getPresenceByStudentIdAndSubjects(subjectId, studentId);
-        return  presences;
+       return  presences;
     }
     @DeleteMapping(("/{subjectId}/{studentId}"))
     @ResponseStatus(HttpStatus.NO_CONTENT)
@@ -45,9 +45,9 @@ public class PresenceController {
     @PostMapping("/{subjectId}/{studentId}")
     @ResponseStatus(HttpStatus.CREATED)
     public void createPresence(@RequestBody Presence presence,  @PathVariable("subjectId") long subjectId, @PathVariable("{studentId}") long studentId){
-        if(presenceService.isPresenceExist(presence)){
+/*        if(presenceService.isPresenceExist(presence)){
             throw new RuntimeException("Presence Already exist");
-        }
+        }*/
         presenceService.save(presence, subjectId, studentId);
     }
 

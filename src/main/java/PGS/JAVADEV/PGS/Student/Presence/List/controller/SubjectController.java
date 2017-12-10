@@ -12,6 +12,7 @@ import PGS.JAVADEV.PGS.Student.Presence.List.service.SubjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -30,7 +31,7 @@ public class  SubjectController {
 
 
 
-    public static final String BASE_URL = "/pgs/subjects";
+    public static final String BASE_URL = "/subjects";
 
     public SubjectController(SubjectService subjectService) {
         this.subjectService = subjectService;
@@ -66,10 +67,12 @@ public class  SubjectController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
+    @PreAuthorize("hasRole('ADMIN')")
     public void createSubject(@RequestBody Subject subject){
-       if(subjectService.isSubjectExist(subject)){
-           // throw new RuntimeException("Subject Already exist");
-        }
+ /*      if(subjectService.isSubjectExist(subject)){
+            throw new RuntimeException("Subject Already exist");
+
+        }*/
         subjectService.save(subject);
 
     }

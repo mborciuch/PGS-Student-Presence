@@ -71,13 +71,11 @@ public class StudentService {
     }
 
     public void delete(Long id){
-        if(isStudentExist(id)){
             studentRepository.deleteById(id);
-        }
     }
 
-    public boolean isStudentExist(long id){
-        StudentEntity studentEntity = studentRepository.findById(id);
+    public boolean isStudentExist(Student student){
+        StudentEntity studentEntity = studentRepository.findByFirstNameAndLastName(student.getFirstName(), student.getLastName());
      return studentEntity != null;
     }
 
