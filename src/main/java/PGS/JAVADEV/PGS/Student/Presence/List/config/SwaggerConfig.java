@@ -25,9 +25,9 @@ public class SwaggerConfig {
         ApiInfo apiInfo = new ApiInfo(
                 "PGS Presence List",
                 "Spring Boot REST API for Student Presence",
-                "1.0",
+                "0.5",
                 "Terms of service",
-                new Contact("Michał Borciuch", "/", "michal123borciuch@gmail.com"),
+                new Contact("Michał Borciuch", "/138474.prz.edu.pl", "michal123borciuch@gmail.com"),
                 "Apache License Version 2.0",
                 "https://www.apache.org/licenses/LICENSE-2.0");
 

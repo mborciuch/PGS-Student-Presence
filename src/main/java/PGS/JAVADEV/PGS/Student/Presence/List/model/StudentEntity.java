@@ -7,7 +7,7 @@ import java.util.Set;
 @Entity
 public class StudentEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private   long id;
     private String firstName;
     private String lastName;
@@ -15,15 +15,8 @@ public class StudentEntity {
     @OneToMany(mappedBy = "studentEntity")
     private Set<StudentSubjectEntity> studentSubjectEntities = new HashSet<>();
 
-
-
     public StudentEntity(){
 
-    }
-
-    public StudentEntity(String firstName, String lastName) {
-        this.firstName = firstName;
-        this.lastName = lastName;
     }
 
     @Override

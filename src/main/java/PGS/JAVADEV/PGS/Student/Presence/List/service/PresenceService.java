@@ -1,6 +1,7 @@
 package PGS.JAVADEV.PGS.Student.Presence.List.service;
 
 import PGS.JAVADEV.PGS.Student.Presence.List.dto.Presence;
+import PGS.JAVADEV.PGS.Student.Presence.List.mapper.PresenceMapper;
 import PGS.JAVADEV.PGS.Student.Presence.List.model.PresenceEntity;
 import PGS.JAVADEV.PGS.Student.Presence.List.model.StudentSubjectEntity;
 import PGS.JAVADEV.PGS.Student.Presence.List.repositories.PresenceRepository;
@@ -10,19 +11,20 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class PresenceService {
-    @Autowired
-    PresenceRepository presenceRepository;
 
-    @Autowired
-    private StudentsSubjectRepository studentsSubjectRepository;
+    private final PresenceRepository presenceRepository;
+    private final StudentsSubjectRepository studentsSubjectRepository;
 
+
+    public PresenceService(PresenceRepository presenceRepository, StudentsSubjectRepository studentsSubjectRepository) {
+        this.presenceRepository = presenceRepository;
+        this.studentsSubjectRepository = studentsSubjectRepository;
+
+    }
 
     public Set<Presence> getPresenceByStudentIdAndSubjects(Long studentId, Long subjectId){
         StudentSubjectEntity studentSubjectEntity = studentsSubjectRepository.findAllByStudentEntityIdAndSubjectEntityId(studentId, subjectId);
@@ -41,7 +43,7 @@ public class PresenceService {
     }
 
 
-    public Presence findByStudentSubjectAndDate(long subjectId, long studentId, String date){
+    public Presence findByStudentSubjectAndDate(long subjectId, long studentId, Date date){
         StudentSubjectEntity studentSubjectEntity = studentsSubjectRepository
                 .findAllByStudentEntityIdAndSubjectEntityId(studentId,subjectId);
         PresenceEntity presenceEntity = presenceRepository.findByStudentSubjectEntityAndDate(studentSubjectEntity,date);
@@ -58,29 +60,27 @@ public class PresenceService {
     }
 
 
-    public void delete(long subjectId, long studentId, String date){
+    public void delete(long subjectId, long studentId, Date date){
         StudentSubjectEntity studentSubjectEntity = studentsSubjectRepository
                 .findAllByStudentEntityIdAndSubjectEntityId(studentId,subjectId);
         PresenceEntity currentPresence = presenceRepository.findByStudentSubjectEntityAndDate(studentSubjectEntity,date);
         presenceRepository.delete(currentPresence);
     }
-
-
-    private PresenceEntity mapPresenceToPresenceEntity (Presence presence){
+    public PresenceEntity mapPresenceToPresenceEntity (Presence presence){
         PresenceEntity presenceEntity = new PresenceEntity();
         presenceEntity.setDate(presence.getDate());
         presenceEntity.setPresence(presence.isPresence());
-
         return presenceEntity;
 
     }
 
-    private Presence mapPresenceEntityToPresence(PresenceEntity presenceEntity){
+    public Presence mapPresenceEntityToPresence(PresenceEntity presenceEntity){
         Presence presence = new Presence();
         presenceEntity.setId(presence.getId());
         presenceEntity.setDate(presence.getDate());
         presenceEntity.setPresence(presence.isPresence());
-
         return presence;
     }
+
+
 }

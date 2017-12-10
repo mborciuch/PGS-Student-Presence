@@ -2,6 +2,7 @@ package PGS.JAVADEV.PGS.Student.Presence.List.service;
 
 import PGS.JAVADEV.PGS.Student.Presence.List.dto.Student;
 import PGS.JAVADEV.PGS.Student.Presence.List.dto.Subject;
+import PGS.JAVADEV.PGS.Student.Presence.List.mapper.SubjectMapper;
 import PGS.JAVADEV.PGS.Student.Presence.List.model.GradeEnum;
 import PGS.JAVADEV.PGS.Student.Presence.List.model.StudentSubjectEntity;
 import PGS.JAVADEV.PGS.Student.Presence.List.model.SubjectEntity;
@@ -24,13 +25,16 @@ public class SubjectService {
 
    private final StudentsSubjectRepository studentSubjectRepository;
 
+  // private final SubjectMapper subjectMapper;
 
-    public SubjectService(SubjectRepository subjectRepository, StudentRepository studentRepository, StudentsSubjectRepository studentSubjectRepository) {
+
+    public SubjectService(SubjectRepository subjectRepository, StudentRepository studentRepository,
+                          StudentsSubjectRepository studentSubjectRepository ) {
         this.subjectRepository = subjectRepository;
-       this.studentRepository = studentRepository;
-       this.studentSubjectRepository = studentSubjectRepository;
-    }
+        this.studentRepository = studentRepository;
+        this.studentSubjectRepository = studentSubjectRepository;
 
+    }
 
     public Set<Subject> findAllSubjects() {
         Iterable<SubjectEntity> subjectEntities = subjectRepository.findAll();
@@ -97,21 +101,7 @@ public class SubjectService {
        return  subjectEntity != null;
     }
 
-   private SubjectEntity mapSubjectToSubjectEntity(Subject subject){
-        SubjectEntity subjectEntity = new SubjectEntity();
 
-        subjectEntity.setName(subject.getName());
-        subjectEntity.setLecturer(subject.getLecturer());
-        return subjectEntity;
-
-    }
-
-    private Subject mapSubjectEntityToSubject(SubjectEntity subjectEntity){
-        Subject subject = new Subject();
-        subject.setName(subjectEntity.getName());
-        subject.setLecturer(subjectEntity.getLecturer());
-        return  subject;
-    }
 
     private Set<Student> getAllStudents(SubjectEntity subjectEntity){
         Set<Student> students = new HashSet<>();
@@ -125,5 +115,18 @@ public class SubjectService {
         return  students;
 
     }
+    public SubjectEntity mapSubjectToSubjectEntity(Subject subject){
+        SubjectEntity subjectEntity = new SubjectEntity();
+        subjectEntity.setName(subject.getName());
+        subjectEntity.setLecturer(subject.getLecturer());
+        return subjectEntity;
 
+    }
+
+    public Subject mapSubjectEntityToSubject(SubjectEntity subjectEntity){
+        Subject subject = new Subject();
+        subject.setName(subjectEntity.getName());
+        subject.setLecturer(subjectEntity.getLecturer());
+        return  subject;
+    }
 }

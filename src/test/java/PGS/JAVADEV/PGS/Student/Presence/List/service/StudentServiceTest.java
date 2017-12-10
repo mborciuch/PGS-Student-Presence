@@ -1,6 +1,7 @@
 package PGS.JAVADEV.PGS.Student.Presence.List.service;
 
 import PGS.JAVADEV.PGS.Student.Presence.List.dto.Student;
+import PGS.JAVADEV.PGS.Student.Presence.List.mapper.StudentMapper;
 import PGS.JAVADEV.PGS.Student.Presence.List.model.StudentEntity;
 import PGS.JAVADEV.PGS.Student.Presence.List.model.StudentSubjectEntity;
 import PGS.JAVADEV.PGS.Student.Presence.List.model.SubjectEntity;
@@ -40,6 +41,8 @@ public class StudentServiceTest {
 
     @Mock
     StudentsSubjectRepository studentsSubjectRepository;
+
+
 
     @Before
     public void setUp() throws Exception {
@@ -132,7 +135,7 @@ public class StudentServiceTest {
 
         studentService.delete(id);
 
-        verify(studentRepository, times(2)).deleteById(id);
+        verify(studentRepository, times(1)).deleteById(id);
     }
 
     @Test

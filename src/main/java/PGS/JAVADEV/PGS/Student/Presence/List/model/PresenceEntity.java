@@ -2,12 +2,13 @@ package PGS.JAVADEV.PGS.Student.Presence.List.model;
 
 import javax.persistence.*;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 @Entity
 public class PresenceEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @ManyToOne
@@ -16,15 +17,12 @@ public class PresenceEntity {
 
     private boolean presence;
 
-    private String date;
+    private Date date;
 
     public PresenceEntity() {
     }
 
-    public PresenceEntity(boolean presence, String date) {
-        this.presence = presence;
-        this.date = date;
-    }
+
 
     public long getId() {
         return id;
@@ -42,11 +40,11 @@ public class PresenceEntity {
         this.presence = presence;
     }
 
-    public String getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 

@@ -9,6 +9,8 @@ import PGS.JAVADEV.PGS.Student.Presence.List.model.SubjectEntity;
 import PGS.JAVADEV.PGS.Student.Presence.List.service.StudentService;
 import PGS.JAVADEV.PGS.Student.Presence.List.service.SubjectService;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,12 +19,14 @@ import org.springframework.web.bind.annotation.*;
 
 
 import javax.print.DocFlavor;
+import javax.validation.Valid;
 import java.util.Set;
 
 import static PGS.JAVADEV.PGS.Student.Presence.List.controller.SubjectController.BASE_URL;
 
 @RestController
 @RequestMapping(SubjectController.BASE_URL)
+@Api(value="Pgs-presence-list", description="Operations related to Subjects")
 public class  SubjectController {
 
 
@@ -39,6 +43,7 @@ public class  SubjectController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
+    @ApiOperation(value = "View a list of all subjects",response = Iterable.class)
     public Set<Subject> getAllSubjects(){
        Set<Subject>  subjects = subjectService.findAllSubjects();
        return subjects;
@@ -46,6 +51,7 @@ public class  SubjectController {
 
     @GetMapping({"/{subjectId}"})
     @ResponseStatus(HttpStatus.OK)
+    @ApiOperation(value = "Find subject by Id",response = Iterable.class)
     public Subject getSubjectById(@PathVariable("subjectId") long id){
         Subject subject = subjectService.findById(id);
         return  subject;
@@ -53,6 +59,7 @@ public class  SubjectController {
 
     @GetMapping({"/byName/{subjectName}"})
     @ResponseStatus(HttpStatus.OK)
+    @ApiOperation(value = "Find subject by Name",response = Iterable.class)
     public Subject getSubjectByName(@PathVariable("subjectName") String name){
         Subject subject = subjectService.findByName(name);
         return  subject;
@@ -60,6 +67,7 @@ public class  SubjectController {
 
     @DeleteMapping ({"/{subjectId}"})
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @ApiOperation(value = "Delete Subject",response = Iterable.class)
     public void deleteSubject(@PathVariable("subjectId") long id){
         subjectService.delete(id);
 
@@ -67,8 +75,8 @@ public class  SubjectController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    @PreAuthorize("hasRole('ADMIN')")
-    public void createSubject(@RequestBody Subject subject){
+    @ApiOperation(value = "Create Subject",response = Iterable.class)
+    public void createSubject(@Valid @RequestBody Subject subject){
  /*      if(subjectService.isSubjectExist(subject)){
             throw new RuntimeException("Subject Already exist");
 
@@ -78,7 +86,8 @@ public class  SubjectController {
     }
     @PutMapping( {"/{subjectId}"})
     @ResponseStatus(HttpStatus.OK)
-    public void updateSubject(@PathVariable("subjectId") long id, @RequestBody Subject subject){
+    @ApiOperation(value = "Update Subject",response = Iterable.class)
+    public void updateSubject(@PathVariable("subjectId") long id, @Valid @RequestBody Subject subject){
         Subject currentSubject = subjectService.findById(id);
         subject.setId(currentSubject.getId());
         subjectService.save(subject);
@@ -87,13 +96,15 @@ public class  SubjectController {
 
    @PostMapping ({"/{subjectId}/{studentId}"})
     @ResponseStatus(HttpStatus.OK)
+   @ApiOperation(value = "Add Student To Subject",response = Iterable.class)
     public void addStudentToSubject(@PathVariable("studentId") long studentId, @PathVariable("subjectId") long subjectId){
         subjectService.addStudentToSubject(studentId,subjectId);
     }
 
     @PostMapping ({"/{subjectId}/{studentId}/addGrade"})
     @ResponseStatus(HttpStatus.OK)
-    public void addGrade(@PathVariable("studentId") long studentId, @PathVariable("subjectId") long subjectId, @RequestBody GradeEnum gradeEnum){ ;
+    @ApiOperation(value = "Add Grade To Student from some Subject",response = Iterable.class)
+    public void addGrade(@PathVariable("studentId") long studentId, @PathVariable("subjectId") long subjectId, @Valid @RequestBody GradeEnum gradeEnum){ ;
         subjectService.addGradeToStudent(studentId,subjectId,gradeEnum);
 
     }

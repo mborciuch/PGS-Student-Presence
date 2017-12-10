@@ -2,6 +2,7 @@ package PGS.JAVADEV.PGS.Student.Presence.List.service;
 
 import PGS.JAVADEV.PGS.Student.Presence.List.dto.Student;
 import PGS.JAVADEV.PGS.Student.Presence.List.dto.Subject;
+import PGS.JAVADEV.PGS.Student.Presence.List.mapper.SubjectMapper;
 import PGS.JAVADEV.PGS.Student.Presence.List.model.StudentEntity;
 import PGS.JAVADEV.PGS.Student.Presence.List.model.StudentSubjectEntity;
 import PGS.JAVADEV.PGS.Student.Presence.List.model.SubjectEntity;
@@ -43,6 +44,9 @@ public class SubjectServiceTest {
     @Mock
     StudentsSubjectRepository studentSubjectRepository;
 
+    @Mock
+    SubjectMapper subjectMapper;
+
     @Before
     public void setUp() throws Exception {
 
@@ -51,6 +55,7 @@ public class SubjectServiceTest {
                 subjectRepository,
                 studentRepository,
                 studentSubjectRepository
+
         );
     }
 
