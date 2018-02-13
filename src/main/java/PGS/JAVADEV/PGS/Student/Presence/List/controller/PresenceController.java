@@ -3,6 +3,7 @@ package PGS.JAVADEV.PGS.Student.Presence.List.controller;
 import PGS.JAVADEV.PGS.Student.Presence.List.dto.Presence;
 import PGS.JAVADEV.PGS.Student.Presence.List.service.PresenceService;
 import PGS.JAVADEV.PGS.Student.Presence.List.service.StudentService;
+import com.sun.xml.internal.bind.v2.TODO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,7 @@ import java.util.Set;
 import static PGS.JAVADEV.PGS.Student.Presence.List.controller.PresenceController.BASE_URL;
 
 @RestController
-@RequestMapping(BASE_URL)
+@RequestMapping(PresenceController.BASE_URL)
 @Api(value="Pgs-presence-list", description="Operations related to Presences of Students")
 public class PresenceController {
 
@@ -30,7 +31,6 @@ public class PresenceController {
 
     @Autowired
     StudentService studentService;
-
 
 
     @GetMapping
@@ -46,10 +46,8 @@ public class PresenceController {
     @PostMapping("/{subjectId}/{studentId}")
     @ResponseStatus(HttpStatus.CREATED)
     @ApiOperation(value = "Create Presence for student from subject",response = Iterable.class)
-    public void createPresence(@Valid @RequestBody Presence presence,  @PathVariable("subjectId") long subjectId, @PathVariable("{studentId}") long studentId){
-/*        if(presenceService.isPresenceExist(presence)){
-            throw new RuntimeException("Presence Already exist");
-        }*/
+    public void createPresence(@Valid @RequestBody Presence presence,  @PathVariable("subjectId") long subjectId, @PathVariable("studentId") long studentId){
+        //Todo: checking excisting presence
         presenceService.save(presence, subjectId, studentId);
     }
 

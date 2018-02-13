@@ -17,7 +17,6 @@ public class SubjectEntity {
     @OneToMany(mappedBy = "subjectEntity")
     private Set<StudentSubjectEntity> studentSubjectEntities = new HashSet<>();
 
-
     public SubjectEntity() {
     }
 
@@ -25,8 +24,6 @@ public class SubjectEntity {
         this.name = name;
         this.lecturer = lecturer;
     }
-
-
 
     public long getId() {
         return id;
@@ -64,15 +61,8 @@ public class SubjectEntity {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         SubjectEntity that = (SubjectEntity) o;
-
         return id == that.id;
-    }
-
-    @Override
-    public int hashCode() {
-        return (int) (id ^ (id >>> 32));
     }
 
     @Override

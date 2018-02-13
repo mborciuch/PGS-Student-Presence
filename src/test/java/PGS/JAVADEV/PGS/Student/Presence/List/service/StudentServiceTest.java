@@ -117,10 +117,10 @@ public class StudentServiceTest {
 
         //Given
         Student student = new Student();
-        student.setId(ID_1);
+        student.setFirstName(STUDENT1_FIRST_NAME);
 
         StudentEntity studentEntity = new StudentEntity();
-        studentEntity.setId(ID_1);
+        student.setFirstName(STUDENT1_FIRST_NAME);
 
         //When
         studentService.save(student);

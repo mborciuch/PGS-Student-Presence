@@ -27,8 +27,6 @@ public class StudentController {
     @Autowired
     StudentService studentService;
 
-
-
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     @ApiOperation(value = "View a list of all students",response = Iterable.class)
@@ -46,13 +44,14 @@ public class StudentController {
     @GetMapping({"/{studentId}"})
     @ResponseStatus(HttpStatus.OK)
     @ApiOperation(value = "Find students by Id ",response = Iterable.class)
-    //@PostAuthorize()
+    @PostAuthorize("returnoObject.id == authentication.id")
     public Student getStudentById(@PathVariable("studentId") long id){
         Authentication authentication =  SecurityContextHolder.getContext().getAuthentication();
         Student student = studentService.findById(id);
         return  student;
     }
-    @GetMapping( "/{firstName/{lastName}")
+
+    @GetMapping( "/byName/{firstName}/{lastName}")
     @ResponseStatus(HttpStatus.OK)
     @ApiOperation(value = "Find students by First and Last Name",response = Iterable.class)
     @PreAuthorize("hasRole('ADMIN')")

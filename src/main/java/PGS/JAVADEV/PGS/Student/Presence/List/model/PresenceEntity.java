@@ -22,8 +22,6 @@ public class PresenceEntity {
     public PresenceEntity() {
     }
 
-
-
     public long getId() {
         return id;
     }

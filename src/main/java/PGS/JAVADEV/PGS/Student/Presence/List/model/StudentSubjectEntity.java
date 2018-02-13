@@ -12,10 +12,10 @@ public class StudentSubjectEntity {
     private long id;
 
     @ManyToOne
-    @JoinColumn(name="student_id")
+    @JoinColumn(name = "student_id")
     private StudentEntity studentEntity;
     @ManyToOne
-    @JoinColumn(name="subject_id")
+    @JoinColumn(name = "subject_id")
     private SubjectEntity subjectEntity;
 
     @OneToMany(mappedBy = "studentSubjectEntity")
@@ -39,7 +39,7 @@ public class StudentSubjectEntity {
         this.subjectEntity = subjectEntity;
     }
 
- public GradeEnum getGradeEnum() {
+    public GradeEnum getGradeEnum() {
         return gradeEnum;
     }
 

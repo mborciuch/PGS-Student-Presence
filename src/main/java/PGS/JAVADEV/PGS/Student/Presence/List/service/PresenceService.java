@@ -52,7 +52,7 @@ public class PresenceService {
         }
         return mapPresenceEntityToPresence(presenceEntity);
     }
-    public void save(Presence presence, long studentId, long subjectId){
+    public void save(Presence presence,  long subjectId, long studentId){
         presenceRepository.save(mapPresenceToPresenceEntity(presence));
         StudentSubjectEntity studentSubjectEntity = studentsSubjectRepository
                 .findAllByStudentEntityIdAndSubjectEntityId(studentId,subjectId);

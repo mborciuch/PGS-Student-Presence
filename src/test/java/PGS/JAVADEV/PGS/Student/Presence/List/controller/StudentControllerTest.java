@@ -25,7 +25,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@RunWith(MockitoJUnitRunner.class)
+@RunWith(MockitoJUnitRunner.Silent.class)
 public class StudentControllerTest {
 
     public static final long ID_1 = 1l;
@@ -116,7 +116,7 @@ public class StudentControllerTest {
 
         //when //Then
 
-        mockMvc.perform(get(StudentController.BASE_URL + "/" + STUDENT1_FIRST_NAME + "/" + STUDENT1_LAST_NAME)
+        mockMvc.perform(get(StudentController.BASE_URL + "/byName" +"/" + STUDENT1_FIRST_NAME + "/" + STUDENT1_LAST_NAME)
             .contentType(MediaType.APPLICATION_JSON))
             .andDo(print())
             .andExpect(status().isOk());

@@ -125,6 +125,7 @@ public class SubjectService {
 
     public Subject mapSubjectEntityToSubject(SubjectEntity subjectEntity){
         Subject subject = new Subject();
+        subject.setId(subjectEntity.getId());
         subject.setName(subjectEntity.getName());
         subject.setLecturer(subjectEntity.getLecturer());
         return  subject;
