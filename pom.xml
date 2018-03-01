@@ -4,12 +4,12 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>PGS-JAVADEV</groupId>
-	<artifactId>student-presence-service</artifactId>
+	<artifactId>studentDTO-presenceDTO-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
 	<name>PGS Student Presence List</name>
-	<description>Program for managing students grades and lectures</description>
+	<description>Program for managing studentDTOS grades and lectures</description>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
