@@ -12,6 +12,6 @@ public interface PresenceRepository extends CrudRepository<Presence, Long> {
 
     Presence findById(long id);
 
-    Presence findByStudentSubjectAndDate(StudentSubject studentSubject, Date date);
+    Presence findByStudentSubjectAndName(StudentSubject studentSubject, String name);
 }
 

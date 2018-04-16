@@ -3,6 +3,7 @@ package students.presence.list.controller;
 import students.presence.list.dto.StudentDTO;
 import students.presence.list.dto.SubjectDTO;
 import students.presence.list.model.GradeEnum;
+import students.presence.list.model.Lecturer;
 import students.presence.list.repositories.StudentRepository;
 import students.presence.list.repositories.SubjectRepository;
 import students.presence.list.service.StudentService;
@@ -34,13 +35,26 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class SubjectControllerTest {
 
     public static final String FIRST_SUBJECT = "Matematyka";
-    public static final String FIRST_LECTURER = "Kowalski";
+
+    public static final String FIRST_NAME_FIRST_LECTURER = "Andrzej";
+
+    public static final String LAST_NAME_FIRST_LECTURER = "Kowalski";
+
     public static final String SECOND_SUBJECT = "Fizyka";
-    public static final String SECON_LECTURER = "Nowak";
+
+    public static final String FIRST_NAME_SECOND_LECTURER = "Marcin";
+
+    public static final String LAST_NAME_SECOND_LECTURER = "Nowak";
+
     public static final long ID_1 = 1L;
+
     public static final long ID_2 = 2l;
+
     public static final String STUDENT1_FIRST_NAME = "Jan";
+
     public static final String STUDENT1_LAST_NAME = "Kowalski";
+
+
 
     @Mock
     SubjectRepository subjectRepository;
@@ -59,6 +73,10 @@ public class SubjectControllerTest {
     @InjectMocks
     SubjectController subjectController;
 
+    Lecturer firstLecturer;
+
+    Lecturer secondLecturer;
+
 
     MockMvc mockMvc;
 
@@ -70,6 +88,14 @@ public class SubjectControllerTest {
         mockMvc = MockMvcBuilders.standaloneSetup(subjectController)
                 .build();
         ArgumentCaptor<Set<SubjectDTO>> argumentCaptorSet = ArgumentCaptor.forClass(Set.class);
+
+        firstLecturer = new Lecturer();
+        firstLecturer.setFirstName(FIRST_NAME_FIRST_LECTURER);
+        firstLecturer.setLastName(LAST_NAME_FIRST_LECTURER);
+
+        secondLecturer = new Lecturer();
+        secondLecturer.setFirstName(FIRST_NAME_SECOND_LECTURER);
+        secondLecturer.setLastName(LAST_NAME_SECOND_LECTURER);
     }
 
     @Test
@@ -78,13 +104,13 @@ public class SubjectControllerTest {
         SubjectDTO subjectDTOFirst = new SubjectDTO();
         subjectDTOFirst.setId(ID_1);
         subjectDTOFirst.setName(FIRST_SUBJECT);
-        subjectDTOFirst.setLecturer(FIRST_LECTURER);
+        subjectDTOFirst.setLecturer(firstLecturer);
         subjectDTOFirst.setStudentDTOS(new HashSet<>());
 
         SubjectDTO subjectDTOSecond = new SubjectDTO();
         subjectDTOSecond.setId(ID_2);
         subjectDTOSecond.setName(SECOND_SUBJECT);
-        subjectDTOSecond.setLecturer(SECON_LECTURER);
+        subjectDTOSecond.setLecturer(secondLecturer);
         subjectDTOSecond.setStudentDTOS(new HashSet<>());
 
         Set<SubjectDTO> subjectDTOS = new HashSet<>();
@@ -106,7 +132,7 @@ public class SubjectControllerTest {
         SubjectDTO subjectDTOFirst = new SubjectDTO();
         subjectDTOFirst.setId(ID_1);
         subjectDTOFirst.setName(FIRST_SUBJECT);
-        subjectDTOFirst.setLecturer(FIRST_LECTURER);
+        subjectDTOFirst.setLecturer(firstLecturer);
         subjectDTOFirst.setStudentDTOS(new HashSet<>());
 
         when(subjectService.findById(ID_1)).thenReturn(subjectDTOFirst);
@@ -123,7 +149,7 @@ public class SubjectControllerTest {
         SubjectDTO subjectDTOFirst = new SubjectDTO();
         subjectDTOFirst.setId(ID_1);
         subjectDTOFirst.setName(FIRST_SUBJECT);
-        subjectDTOFirst.setLecturer(FIRST_LECTURER);
+        subjectDTOFirst.setLecturer(secondLecturer);
         subjectDTOFirst.setStudentDTOS(new HashSet<>());
 
         when(subjectService.findByName(FIRST_SUBJECT)).thenReturn(subjectDTOFirst);
@@ -147,7 +173,7 @@ public class SubjectControllerTest {
         SubjectDTO subjectDTOFirst = new SubjectDTO();
         subjectDTOFirst.setId(ID_1);
         subjectDTOFirst.setName(FIRST_SUBJECT);
-        subjectDTOFirst.setLecturer(FIRST_LECTURER);
+        subjectDTOFirst.setLecturer(firstLecturer);
         subjectDTOFirst.setStudentDTOS(new HashSet<>());
 
         //when //Then
@@ -164,13 +190,13 @@ public class SubjectControllerTest {
         SubjectDTO subjectDTOFirst = new SubjectDTO();
         subjectDTOFirst.setId(ID_1);
         subjectDTOFirst.setName(FIRST_SUBJECT);
-        subjectDTOFirst.setLecturer(FIRST_LECTURER);
+        subjectDTOFirst.setLecturer(firstLecturer);
         subjectDTOFirst.setStudentDTOS(new HashSet<>());
 
         SubjectDTO subjectDTOSecond = new SubjectDTO();
         subjectDTOSecond.setId(ID_2);
         subjectDTOSecond.setName(SECOND_SUBJECT);
-        subjectDTOSecond.setLecturer(SECON_LECTURER);
+        subjectDTOSecond.setLecturer(secondLecturer);
         subjectDTOSecond.setStudentDTOS(new HashSet<>());
 
         when(subjectService.findById(ID_1)).thenReturn(subjectDTOFirst);
@@ -188,7 +214,7 @@ public class SubjectControllerTest {
         SubjectDTO subjectDTOFirst = new SubjectDTO();
         subjectDTOFirst.setId(ID_1);
         subjectDTOFirst.setName(FIRST_SUBJECT);
-        subjectDTOFirst.setLecturer(FIRST_LECTURER);
+        subjectDTOFirst.setLecturer(firstLecturer);
         subjectDTOFirst.setStudentDTOS(new HashSet<>());
 
         StudentDTO studentDTOFirst = new StudentDTO();
@@ -213,7 +239,7 @@ public class SubjectControllerTest {
         SubjectDTO subjectDTOFirst = new SubjectDTO();
         subjectDTOFirst.setId(ID_1);
         subjectDTOFirst.setName(FIRST_SUBJECT);
-        subjectDTOFirst.setLecturer(FIRST_LECTURER);
+        subjectDTOFirst.setLecturer(firstLecturer);
         subjectDTOFirst.setStudentDTOS(new HashSet<>());
 
         StudentDTO studentDTOFirst = new StudentDTO();

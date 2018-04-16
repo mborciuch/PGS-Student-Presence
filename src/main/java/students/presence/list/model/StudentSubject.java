@@ -3,6 +3,7 @@ package students.presence.list.model;
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
+
 @Table
 @Entity
 public class StudentSubject {
@@ -13,6 +14,7 @@ public class StudentSubject {
     @ManyToOne
     @JoinColumn(name = "student_id")
     private Student student;
+
     @ManyToOne
     @JoinColumn(name = "subject_id")
     private Subject subject;

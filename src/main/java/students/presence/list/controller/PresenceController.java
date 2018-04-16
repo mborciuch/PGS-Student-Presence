@@ -47,7 +47,7 @@ public class PresenceController {
     @ResponseStatus(HttpStatus.OK)
     @ApiOperation(value = "Update presenceDTO PresenceDTO", response = Iterable.class)
     public void updatePresence(@Valid @RequestBody PresenceDTO presenceDTO, @PathVariable("subjectId") long subjectId, @PathVariable("{studentId}") long studentId) {
-        PresenceDTO currentPresenceDTO = presenceService.findByStudentSubjectAndDate(subjectId, studentId, presenceDTO.getDate());
+        PresenceDTO currentPresenceDTO = presenceService.findByStudentSubjectAndName(subjectId, studentId, presenceDTO.getName());
         presenceDTO.setId(currentPresenceDTO.getId());
         presenceService.save(presenceDTO, studentId, subjectId);
     }
@@ -56,7 +56,7 @@ public class PresenceController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @ApiOperation(value = "Delete PresenceDTO", response = Iterable.class)
     public void deletePresence(@Valid @RequestBody PresenceDTO presenceDTO, @PathVariable("subjectId") long subjectId, @PathVariable("{studentId}") long studentId) {
-        presenceService.delete(subjectId, studentId, presenceDTO.getDate());
+        presenceService.delete(subjectId, studentId, presenceDTO.getName());
     }
 
 

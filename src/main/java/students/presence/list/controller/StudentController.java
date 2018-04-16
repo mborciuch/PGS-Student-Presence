@@ -89,7 +89,7 @@ public class StudentController {
 
     }
    @PostMapping("/{studentId}/add/{subjectId}")
-    @ResponseStatus(HttpStatus.OK)
+   @ResponseStatus(HttpStatus.OK)
    @ApiOperation(value = "Update StudentDTO",response = Iterable.class)
    @PreAuthorize("hasRole('ADMIN')")
     public void addSubjectToStudent(@PathVariable("studentId") long studentId, @PathVariable("subjectId") long subjectId){

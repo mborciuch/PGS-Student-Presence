@@ -13,6 +13,7 @@ import java.util.*;
 public class PresenceService {
 
     private final PresenceRepository presenceRepository;
+
     private final StudentsSubjectRepository studentsSubjectRepository;
 
 
@@ -38,10 +39,10 @@ public class PresenceService {
         return presenceDTOS;
     }
 
-    public PresenceDTO findByStudentSubjectAndDate(long subjectId, long studentId, Date date) {
+    public PresenceDTO findByStudentSubjectAndName(long subjectId, long studentId, String name) {
         StudentSubject studentSubject = studentsSubjectRepository
                 .findByStudentIdAndSubjectId(studentId, subjectId);
-        Presence presence = presenceRepository.findByStudentSubjectAndDate(studentSubject, date);
+        Presence presence = presenceRepository.findByStudentSubjectAndName(studentSubject, name);
         if (presence == null) {
             return null;
         }
@@ -56,15 +57,16 @@ public class PresenceService {
     }
 
 
-    public void delete(long subjectId, long studentId, Date date) {
+    public void delete(long subjectId, long studentId, String name) {
         StudentSubject studentSubject = studentsSubjectRepository
                 .findAllByStudentIdAndSubjectId(studentId, subjectId);
-        Presence currentPresence = presenceRepository.findByStudentSubjectAndDate(studentSubject, date);
+        Presence currentPresence = presenceRepository.findByStudentSubjectAndName(studentSubject, name);
         presenceRepository.delete(currentPresence);
     }
 
     public Presence mapPresenceDTOToPresence(PresenceDTO presenceDTO) {
         Presence presence = new Presence();
+        presence.setName(presenceDTO.getName());
         presence.setDate(presenceDTO.getDate());
         presence.setPresence(presenceDTO.isPresence());
         return presence;

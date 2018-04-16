@@ -3,6 +3,7 @@ package students.presence.list.service;
 import students.presence.list.dto.StudentDTO;
 import students.presence.list.dto.SubjectDTO;
 import students.presence.list.mapper.SubjectMapper;
+import students.presence.list.model.Lecturer;
 import students.presence.list.model.Student;
 import students.presence.list.model.StudentSubject;
 import students.presence.list.model.Subject;
@@ -24,14 +25,27 @@ import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class SubjectServiceTest {
+
     public static final long ID_1 = 1L;
+
     public static final String FIRST_NAME_1 = "Jan";
+
     public static final String LAST_NAME_1 = "Kowalski";
+
     public static final long ID_2 = 2L;
+
     public static final String FIRST_NAME_2 = "Marian";
+
     public static final String LAST_NAME_2 = "Nowak";
+
     public static final String SUBJECT_MATH = "Matematyka";
+
+    public static final String FIRST_NAME_LECTURER = "Marcin";
+
+    public static final String LAST_NAME_LECTURER = "Nowak";
+
     private final long emptySize = 0;
+
     @Autowired
     SubjectService subjectService;
 
@@ -47,21 +61,25 @@ public class SubjectServiceTest {
     @Mock
     SubjectMapper subjectMapper;
 
+    Lecturer lecturer;
+
     @Before
     public void setUp() throws Exception {
-
-
         subjectService = new SubjectService(
                 subjectRepository,
                 studentRepository,
                 studentSubjectRepository
-
         );
+        lecturer = new Lecturer();
+        lecturer.setFirstName(FIRST_NAME_LECTURER);
+        lecturer.setLastName(LAST_NAME_LECTURER);
     }
 
     @Test
     public void findAllSubjects() throws Exception {
         Subject subject = new Subject();
+        subject.setName(SUBJECT_MATH);
+        subject.setLecturer(lecturer);
 
         Set<Subject> subjectEntities = new HashSet<>();
         subjectEntities.add(subject);
@@ -151,8 +169,6 @@ public class SubjectServiceTest {
         //then
         verify(subjectRepository, times(1)).save(subjectFirst);
         assertEquals(subjectDTOFirst.getName(), subjectFirst.getName());
-
-
     }
 
     @Test

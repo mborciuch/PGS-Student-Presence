@@ -10,15 +10,18 @@ public class Subject {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
+
     private String name;
-    private String lecturer;
+
+    @OneToOne
+    private Lecturer lecturer;
+
     @OneToMany(mappedBy = "subject")
     private Set<StudentSubject> studentSubjects = new HashSet<>();
 
-    public Subject() {
-    }
+    public Subject() { }
 
-    public Subject(String name, String lecturer) {
+    public Subject(String name, Lecturer lecturer) {
         this.name = name;
         this.lecturer = lecturer;
     }
@@ -27,7 +30,7 @@ public class Subject {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -39,11 +42,11 @@ public class Subject {
         this.name = name;
     }
 
-    public String getLecturer() {
+    public Lecturer getLecturer() {
         return lecturer;
     }
 
-    public void setLecturer(String lecturer) {
+    public void setLecturer(Lecturer lecturer) {
         this.lecturer = lecturer;
     }
 
@@ -59,17 +62,18 @@ public class Subject {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Subject that = (Subject) o;
-        return id == that.id;
+
+        Subject subject = (Subject) o;
+
+        if (!name.equals(subject.name)) return false;
+        return lecturer.equals(subject.lecturer);
     }
 
     @Override
-    public String toString() {
-        return "Subject{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", lecturer='" + lecturer + '\'' +
-                '}';
+    public int hashCode() {
+        int result = name.hashCode();
+        result = 31 * result + lecturer.hashCode();
+        return result;
     }
 }
 

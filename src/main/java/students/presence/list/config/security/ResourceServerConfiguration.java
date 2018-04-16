@@ -22,15 +22,14 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
     }
 
 
-
     @Override
     public void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/pgs/**").access("hasRole('ADMIN')")
-                .antMatchers("/pgs/students").access("hasAnyRole('User','ADMIN')")
-                .antMatchers("/pgs/oauth/token").permitAll()
-                .antMatchers("/pgs/h2-console").permitAll()
+                .antMatchers("/api/**").access("hasRole('ADMIN')")
+                .antMatchers("/api/students").access("hasAnyRole('User','ADMIN')")
+                .antMatchers("/api/oauth/token").permitAll()
+                .antMatchers("/api/h2-console").permitAll()
                 .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and().csrf().disable()

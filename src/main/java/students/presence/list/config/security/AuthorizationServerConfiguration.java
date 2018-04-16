@@ -36,13 +36,10 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
     @Qualifier("authenticationManagerBean")
     private AuthenticationManager authenticationManager;
 
-
-
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
 
         clients.inMemory()
-
                 .withClient("my-trusted-client")
                 .authorizedGrantTypes("password", "authorization_code", "refresh_token", "implicit")
                 .authorities("ROLE_CLIENT", "ROLE_TRUSTED_CLIENT")

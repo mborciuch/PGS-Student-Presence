@@ -3,6 +3,7 @@ package students.presence.list.controller;
 
 import students.presence.list.dto.StudentDTO;
 import students.presence.list.dto.SubjectDTO;
+import students.presence.list.model.Lecturer;
 import students.presence.list.service.StudentService;
 import students.presence.list.service.SubjectService;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -35,7 +36,8 @@ public class StudentControllerTest {
     public static final String STUDENT2_FIRST_NAME = "Adam";
     public static final String STUDENT2_LAST_NAME = "Nowak";
     public static final String FIRST_SUBJECT = "Matematyka";
-    public static final String FIRST_LECTURER = "Kowalski";
+    public static final String FIRST_NAME_LECTURER = "Jan";
+    public static final String LAST_NAME_LECTURER = "Kowalski";
 
     @Mock
     StudentService studentService;
@@ -50,10 +52,15 @@ public class StudentControllerTest {
 
     ObjectMapper jsonMapper = new ObjectMapper().setSerializationInclusion(JsonInclude.Include.NON_NULL);
 
+    Lecturer lecturer;
+
     @Before
     public void setUp() throws Exception {
         mockMvc = MockMvcBuilders.standaloneSetup(studentController)
                 .build();
+        Lecturer lecturer = new Lecturer();
+        lecturer.setFirstName(FIRST_NAME_LECTURER);
+        lecturer.setLastName(LAST_NAME_LECTURER);
     }
 
     @Test
@@ -172,7 +179,7 @@ public class StudentControllerTest {
         SubjectDTO subjectDTOFirst = new SubjectDTO();
         subjectDTOFirst.setId(ID_1);
         subjectDTOFirst.setName(FIRST_SUBJECT);
-        subjectDTOFirst.setLecturer(FIRST_LECTURER);
+        subjectDTOFirst.setLecturer(lecturer);
         subjectDTOFirst.setStudentDTOS(new HashSet<>());
 
 

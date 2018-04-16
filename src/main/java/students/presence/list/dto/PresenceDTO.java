@@ -6,8 +6,10 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class PresenceDTO {
+
     private long id;
 
+    private String name;
     @NotNull
     @PastOrPresent
     private Date date;
@@ -20,7 +22,14 @@ public class PresenceDTO {
         this.isPresence = presence;
     }
 
-    public PresenceDTO() {
+    public PresenceDTO() { }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public long getId() {

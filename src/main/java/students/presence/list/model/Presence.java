@@ -5,10 +5,11 @@ import java.util.Date;
 
 @Entity
 public class Presence {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
+    private String name;
 
     @ManyToOne
     @JoinColumn(name = "student_subject_id")
@@ -18,7 +19,14 @@ public class Presence {
 
     private Date date;
 
-    public Presence() {
+    public Presence() {}
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public long getId() {
@@ -50,23 +58,18 @@ public class Presence {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Presence that = (Presence) o;
+        Presence presence1 = (Presence) o;
 
-        return id == that.id;
+        if (presence != presence1.presence) return false;
+        if (!studentSubject.equals(presence1.studentSubject)) return false;
+        return date.equals(presence1.date);
     }
 
     @Override
     public int hashCode() {
-        return (int) (id ^ (id >>> 32));
-    }
-
-    @Override
-    public String toString() {
-        return "Presence{" +
-                "id=" + id +
-                ", studentSubject=" + studentSubject +
-                ", presence=" + presence +
-                ", date='" + date + '\'' +
-                '}';
+        int result = name.hashCode();
+        result = 31 * result + (presence ? 1 : 0);
+        result = 31 * result + date.hashCode();
+        return result;
     }
 }

@@ -9,9 +9,10 @@ public class Student {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    private String firstName;
-    private String lastName;
 
+    private String firstName;
+
+    private String lastName;
     @OneToMany(mappedBy = "student")
     private Set<StudentSubject> studentSubjects = new HashSet<>();
 

@@ -22,7 +22,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private ClientDetailsService clientDetailsService;
 
-
     @Autowired
     public void configureGlobal (AuthenticationManagerBuilder auth) throws Exception {
         auth

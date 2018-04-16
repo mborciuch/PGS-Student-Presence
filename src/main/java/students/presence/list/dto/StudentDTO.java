@@ -9,9 +9,11 @@ import java.util.Set;
 public class StudentDTO {
 
     private  long id;
+
     @NotNull
     @Size(min = 1, max = 255)
     private String firstName;
+
     @NotNull
     @Size(min = 1, max = 255)
     private String lastName;
@@ -19,9 +21,8 @@ public class StudentDTO {
     private Set<StudentSubjectDTO> subjects = new HashSet<>();
 
 
-    public StudentDTO(){
+    public StudentDTO(){ }
 
-    };
     public StudentDTO(String firstName, String lastName) {
         this.firstName = firstName;
         this.lastName = lastName;

@@ -1,6 +1,7 @@
 package students.presence.list.dto;
 
 import students.presence.list.model.GradeEnum;
+import students.presence.list.model.Lecturer;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -9,7 +10,7 @@ public class StudentSubjectDTO {
 
     private Long subjectId;
     private String subjectName;
-    private String lecturer;
+    private Lecturer lecturer;
     private Set<PresenceDTO> presenceDTOS = new HashSet<>();
     private GradeEnum grade;
 
@@ -46,11 +47,11 @@ public class StudentSubjectDTO {
         this.grade = grade;
     }
 
-    public String getLecturer() {
+    public Lecturer getLecturer() {
         return lecturer;
     }
 
-    public void setLecturer(String lecturer) {
+    public void setLecturer(Lecturer lecturer) {
         this.lecturer = lecturer;
     }
 }
