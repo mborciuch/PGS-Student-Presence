@@ -9,7 +9,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 @SpringBootTest(
 		webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
 		classes = PgsStudentPresenceListApplication.class)
-public class PgsStudentPresenceListApplicationTests {
+public class PgsStudentAttendanceListApplicationTests {
 
 	@Test
 	public void contextLoads() {

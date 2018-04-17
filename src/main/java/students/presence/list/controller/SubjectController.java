@@ -1,9 +1,9 @@
 package students.presence.list.controller;
 
 
-import students.presence.list.dto.SubjectDTO;
-import students.presence.list.model.GradeEnum;
-import students.presence.list.service.SubjectService;
+import students.presence.list.dto.CourseDTO;
+import students.presence.list.model.Grade;
+import students.presence.list.service.CourseService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -20,83 +20,81 @@ import java.util.Set;
 public class SubjectController {
 
 
-    SubjectService subjectService;
-
-
     public static final String BASE_URL = "/subjects";
 
-    public SubjectController(SubjectService subjectService) {
-        this.subjectService = subjectService;
+    CourseService courseService;
+
+    public SubjectController(CourseService courseService) {
+        this.courseService = courseService;
     }
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     @ApiOperation(value = "View a list of all subjects", response = Iterable.class)
-    public Set<SubjectDTO> getAllSubjects() {
-        Set<SubjectDTO> subjectDTOS = subjectService.findAllSubjects();
-        return subjectDTOS;
+    public Set<CourseDTO> getAllSubjects() {
+        Set<CourseDTO> courseDTOS = courseService.findAllSubjects();
+        return courseDTOS;
     }
 
     @GetMapping({"/{subjectId}"})
     @ResponseStatus(HttpStatus.OK)
     @ApiOperation(value = "Find subject by Id", response = Iterable.class)
-    public SubjectDTO getSubjectById(@PathVariable("subjectId") long id) {
-        SubjectDTO subjectDTO = subjectService.findById(id);
-        return subjectDTO;
+    public CourseDTO getSubjectById(@PathVariable("subjectId") long id) {
+        CourseDTO courseDTO = courseService.findById(id);
+        return courseDTO;
     }
 
-    @GetMapping({"/byName/{subjectName}"})
+    @GetMapping({"/{subjectName}"})
     @ResponseStatus(HttpStatus.OK)
     @ApiOperation(value = "Find subject by Name", response = Iterable.class)
-    public SubjectDTO getSubjectByName(@PathVariable("subjectName") String name) {
-        SubjectDTO subjectDTO = subjectService.findByName(name);
-        return subjectDTO;
+    public Set<CourseDTO> getSubjectByName(@PathVariable("subjectName") String name) {
+        Set<CourseDTO> courseDTO = courseService.findByName(name);
+        return courseDTO;
     }
 
     @DeleteMapping({"/{subjectId}"})
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @ApiOperation(value = "Delete SubjectDTO", response = Iterable.class)
+    @ApiOperation(value = "Delete CourseDTO", response = Iterable.class)
     public void deleteSubject(@PathVariable("subjectId") long id) {
-        subjectService.delete(id);
-
+        courseService.deleteCourse(id);
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    @ApiOperation(value = "Create SubjectDTO", response = Iterable.class)
-    public void createSubject(@Valid @RequestBody SubjectDTO subjectDTO) {
- /*      if(subjectService.isSubjectExist(subjectDTO)){
-            throw new RuntimeException("SubjectDTO Already exist");
+    @ApiOperation(value = "Create CourseDTO", response = Iterable.class)
+    public void createSubject(@Valid @RequestBody CourseDTO courseDTO) {
+        //ToDo
+        //Gdzie rzucić wyjątek
+        /*if (courseService.isSubjectExist(courseDTO)) {
+            throw new RuntimeException("CourseDTO Already exist");
 
         }*/
-        subjectService.save(subjectDTO);
-
+        courseService.saveCourse(courseDTO);
     }
 
     @PutMapping({"/{subjectId}"})
     @ResponseStatus(HttpStatus.OK)
-    @ApiOperation(value = "Update SubjectDTO", response = Iterable.class)
-    public void updateSubject(@PathVariable("subjectId") long id, @Valid @RequestBody SubjectDTO subjectDTO) {
-        SubjectDTO currentSubjectDTO = subjectService.findById(id);
-        subjectDTO.setId(currentSubjectDTO.getId());
-        subjectService.save(subjectDTO);
-
+    @ApiOperation(value = "Update CourseDTO", response = Iterable.class)
+    public void updateSubject(@PathVariable("subjectId") long id, @Valid @RequestBody CourseDTO courseDTO) {
+        CourseDTO currentCourseDTO = courseService.findById(id);
+        courseDTO.setId(currentCourseDTO.getId());
+        courseService.saveCourse(courseDTO);
     }
 
     @PostMapping({"/{subjectId}/{studentId}"})
     @ResponseStatus(HttpStatus.OK)
-    @ApiOperation(value = "Add StudentDTO To SubjectDTO", response = Iterable.class)
+    @ApiOperation(value = "Add StudentDTO To CourseDTO", response = Iterable.class)
     public void addStudentToSubject(@PathVariable("studentId") long studentId, @PathVariable("subjectId") long subjectId) {
-        subjectService.addStudentToSubject(studentId, subjectId);
+        courseService.addStudentToCourse(studentId, subjectId);
     }
 
+    //ToDo
+    //Dodawanie oceny: usunięcie Grade z URL
     @PostMapping({"/{subjectId}/{studentId}/addGrade"})
     @ResponseStatus(HttpStatus.OK)
-    @ApiOperation(value = "Add Grade To StudentDTO from some SubjectDTO", response = Iterable.class)
-    public void addGrade(@PathVariable("studentId") long studentId, @PathVariable("subjectId") long subjectId, @Valid @RequestBody GradeEnum gradeEnum) {
-        ;
-        subjectService.addGradeToStudent(studentId, subjectId, gradeEnum);
-
+    @ApiOperation(value = "Add Grade To StudentDTO from some CourseDTO", response = Iterable.class)
+    public void addGrade(@PathVariable("studentId") long studentId, @PathVariable("subjectId") long subjectId, @Valid @RequestBody Grade grade) {
+        courseService.addGradeToStudent(studentId, subjectId, grade);
     }
 
 

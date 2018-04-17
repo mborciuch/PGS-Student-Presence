@@ -1,4 +1,4 @@
-package students.presence.list.config;
+package students.presence.list.swagger;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -24,7 +24,7 @@ public class SwaggerConfig {
 
     private ApiInfo metaData() {
         ApiInfo apiInfo = new ApiInfo(
-                "PGS PresenceDTO List",
+                "PGS Attendance List",
                 "Spring Boot REST API for Students presences",
                 "0.5",
                 "Terms of service",

@@ -4,7 +4,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-public class PresenceServiceTest {
+public class AttendanceServiceTest {
     @Test
     public void getPresenceByStudentIdAndSubjects() throws Exception {
     }

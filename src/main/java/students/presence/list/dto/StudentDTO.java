@@ -1,6 +1,7 @@
 package students.presence.list.dto;
 
 
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.HashSet;
@@ -18,15 +19,15 @@ public class StudentDTO {
     @Size(min = 1, max = 255)
     private String lastName;
 
-    private Set<StudentSubjectDTO> subjects = new HashSet<>();
+    @Email
+    private String email;
+
+    private Set<String> courseNames = new HashSet<>();
 
 
     public StudentDTO(){ }
 
-    public StudentDTO(String firstName, String lastName) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-    }
+
 
     public long getId() {
         return id;
@@ -52,21 +53,41 @@ public class StudentDTO {
         this.lastName = lastName;
     }
 
-    public Set<StudentSubjectDTO> getSubjects() {
-        return subjects;
+    public String getEmail() {
+        return email;
     }
 
-    public void setSubjects(Set<StudentSubjectDTO> subjects) {
-        this.subjects = subjects;
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public Set<String> getCourseNames() {
+        return courseNames;
+    }
+
+    public void setCourseNames(Set<String> courseNames) {
+        this.courseNames = courseNames;
     }
 
     @Override
-    public String toString() {
-        return "StudentDTO{" +
-                "id=" + id +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", subjects=" + subjects +
-                '}';
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        StudentDTO that = (StudentDTO) o;
+
+        if (firstName != null ? !firstName.equals(that.firstName) : that.firstName != null) return false;
+        if (lastName != null ? !lastName.equals(that.lastName) : that.lastName != null) return false;
+        return email != null ? email.equals(that.email) : that.email == null;
     }
+
+    @Override
+    public int hashCode() {
+        int result = firstName != null ? firstName.hashCode() : 0;
+        result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
+        result = 31 * result + (email != null ? email.hashCode() : 0);
+        return result;
+    }
+
+
 }

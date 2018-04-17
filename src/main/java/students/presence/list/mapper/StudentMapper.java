@@ -6,19 +6,20 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class StudentMapper {
-
     public Student mapStudentDTOToStudent(StudentDTO studentDTO) {
         Student student = new Student();
-        student.setId(studentDTO.getId());
         student.setFirstName(studentDTO.getFirstName());
         student.setLastName(studentDTO.getLastName());
+        student.setEmail(studentDTO.getEmail());
         return student;
     }
 
     public StudentDTO mapStudentToStudentDTO(Student student) {
         StudentDTO studentDTO = new StudentDTO();
+        studentDTO.setId(student.getId());
         studentDTO.setFirstName(student.getFirstName());
         studentDTO.setLastName(student.getLastName());
+        studentDTO.setEmail(student.getEmail());
         return studentDTO;
     }
 

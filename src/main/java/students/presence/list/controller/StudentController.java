@@ -39,9 +39,9 @@ public class StudentController {
     public Set<StudentDTO> getAllStudents(){
         Set<StudentDTO> studentDTOS = studentService.findAllStudents();
         return studentDTOS;
-
     }
-    @GetMapping({"/{studentId}"})
+
+    @GetMapping({"/student/{studentId}"})
     @ResponseStatus(HttpStatus.OK)
     @ApiOperation(value = "Find students by Id ",response = Iterable.class)
     @PostAuthorize("returnoObject.id == authentication.id")
@@ -51,22 +51,21 @@ public class StudentController {
         return studentDTO;
     }
 
-    @GetMapping( "/byName/{firstName}/{lastName}")
+    @GetMapping( "/student/{firstName}/{lastName}")
     @ResponseStatus(HttpStatus.OK)
     @ApiOperation(value = "Find students by First and Last Name",response = Iterable.class)
     @PreAuthorize("hasRole('ADMIN')")
-    public StudentDTO getStudentByFirstNameAndLastName(@PathVariable("firstName") String firstName, @PathVariable("lastName") String lastName ){
-        StudentDTO studentDTO = studentService.findByFirstNameAndLastName(firstName, lastName);
+    public Set<StudentDTO> getStudentByFirstNameAndLastName(@PathVariable("firstName") String firstName, @PathVariable("lastName") String lastName ){
+        Set<StudentDTO> studentDTO = studentService.findByFirstNameAndLastName(firstName, lastName);
         return studentDTO;
     }
 
-    @DeleteMapping("/{studentId}")
+    @DeleteMapping("/student/{studentId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @ApiOperation(value = "Delete StudentDTO",response = Iterable.class)
     @PreAuthorize("hasRole('ADMIN')")
-    public void deleteStudentById(@PathVariable("studentId") Long id)
-    {
-        studentService.delete(id);
+    public void deleteStudentById(@PathVariable("studentId") Long id) {
+        studentService.deleteStudent(id);
     }
 
     @PostMapping
@@ -74,28 +73,24 @@ public class StudentController {
     @ApiOperation(value = "Add StudentDTO",response = Iterable.class)
     @PreAuthorize("hasRole('ADMIN')")
     public void createStudent(@RequestBody StudentDTO studentDTO){
-        if(!studentService.isStudentExist(studentDTO))
-        studentService.save(studentDTO);
-
+        studentService.saveStudent(studentDTO);
     }
-    @PutMapping("/{studentId}")
+
+    @PutMapping("/student/{studentId}")
     @ResponseStatus(HttpStatus.OK)
     @ApiOperation(value = "Update StudentDTO",response = Iterable.class)
     @PreAuthorize("hasRole('ADMIN')")
     public void updateStudent(@PathVariable("id") long id, @Valid @RequestBody StudentDTO studentDTO){
         StudentDTO currentStudentDTO = studentService.findById(id);
         studentDTO.setId(currentStudentDTO.getId());
-        studentService.save(studentDTO);
-
+        studentService.saveStudent(studentDTO);
     }
-   @PostMapping("/{studentId}/add/{subjectId}")
+
+   @PostMapping("/student/{studentId}/course/{courseId}")
    @ResponseStatus(HttpStatus.OK)
    @ApiOperation(value = "Update StudentDTO",response = Iterable.class)
    @PreAuthorize("hasRole('ADMIN')")
-    public void addSubjectToStudent(@PathVariable("studentId") long studentId, @PathVariable("subjectId") long subjectId){
-        studentService.addSubjectToStudent(studentId,subjectId);
+    public void addSubjectToStudent(@PathVariable("studentId") long studentId, @PathVariable("courseId") long courseId){
+        studentService.enrollStudentToCourse(studentId,courseId);
     }
-
-
-
 }

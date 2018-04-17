@@ -1,7 +1,7 @@
 package students.presence.list.controller;
 
 import students.presence.list.PgsStudentPresenceListApplication;
-import students.presence.list.repositories.SubjectRepository;
+import students.presence.list.repositories.CourseRepository;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -17,7 +17,7 @@ public abstract class RestControllerTest {
     @Autowired
     TestRestTemplate restTemplate;
     @Autowired
-    SubjectRepository subjectRepository;
+    CourseRepository courseRepository;
 
 
 }

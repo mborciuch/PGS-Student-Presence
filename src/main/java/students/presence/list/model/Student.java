@@ -13,20 +13,22 @@ public class Student {
     private String firstName;
 
     private String lastName;
+
+    private String email;
+
     @OneToMany(mappedBy = "student")
-    private Set<StudentSubject> studentSubjects = new HashSet<>();
+    private Set<Enrollment> enrollments = new HashSet<>();
+
+    @OneToMany(mappedBy = "student")
+    private Set<Attendance> attendances = new HashSet<>();
 
     public Student() {
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Student student = (Student) o;
-
-        return id == student.id;
+    public Student(String firstName, String lastName, String email) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
     }
 
     public long getId() {
@@ -53,25 +55,47 @@ public class Student {
         this.lastName = lastName;
     }
 
-    public Set<StudentSubject> getStudentSubjects() {
-        return studentSubjects;
+    public String getEmail() {
+        return email;
     }
 
-    public void setStudentSubjects(Set<StudentSubject> studentSubjects) {
-        this.studentSubjects = studentSubjects;
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public Set<Enrollment> getEnrollments() {
+        return enrollments;
+    }
+
+    public void setEnrollments(Set<Enrollment> enrollments) {
+        this.enrollments = enrollments;
+    }
+
+    public Set<Attendance> getAttendances() {
+        return attendances;
+    }
+
+    public void setAttendances(Set<Attendance> attendances) {
+        this.attendances = attendances;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Student student = (Student) o;
+
+        if (!firstName.equals(student.firstName)) return false;
+        if (!lastName.equals(student.lastName)) return false;
+        return email.equals(student.email);
     }
 
     @Override
     public int hashCode() {
-        return (int) (id ^ (id >>> 32));
-    }
-
-    @Override
-    public String toString() {
-        return "Student{" +
-                "id=" + id +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                '}';
+        int result = firstName.hashCode();
+        result = 31 * result + lastName.hashCode();
+        result = 31 * result + email.hashCode();
+        return result;
     }
 }
