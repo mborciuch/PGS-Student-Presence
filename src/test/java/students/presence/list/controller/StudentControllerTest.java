@@ -100,7 +100,7 @@ public class StudentControllerTest {
     }
 
     @Test
-    public void getStudentById() throws Exception {
+    public void getLecturerById() throws Exception {
         //Given
         when(studentService.findById(ID_1)).thenReturn(studentDTOFirst);
 
@@ -112,7 +112,7 @@ public class StudentControllerTest {
     }
 
     @Test
-    public void getStudentByFirstNameAndLastName() throws Exception {
+    public void getLecturerByFirstNameAndLastName() throws Exception {
         //Given
         Set<StudentDTO> studentsByName = new HashSet<>();
         studentsByName.add(studentDTOFirst);
@@ -126,13 +126,13 @@ public class StudentControllerTest {
     }
 
     @Test
-    public void deleteStudentById() throws Exception {
+    public void deleteLecturer() throws Exception {
         mockMvc.perform(delete(StudentController.BASE_URL + "/1"))
                 .andExpect(status().isNoContent());
     }
 
     @Test
-    public void createStudent() throws Exception {
+    public void createLecturer() throws Exception {
         //when //Then
         mockMvc.perform(post(StudentController.BASE_URL)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -141,7 +141,7 @@ public class StudentControllerTest {
     }
 
     @Test
-    public void updateStudent() throws Exception {
+    public void updateLecturer() throws Exception {
         fail();
     }
 

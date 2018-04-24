@@ -13,5 +13,4 @@ public interface StudentRepository extends CrudRepository<Student, Long> {
 
     Set<Student> findByFirstNameAndLastName(String firstName, String lastName);
 
-    void deleteByFirstNameAndLastName(String firstName, String lastName);
 }

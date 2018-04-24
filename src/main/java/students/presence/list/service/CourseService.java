@@ -24,9 +24,7 @@ public class CourseService {
 
     private final EnrollmentRepository enrollmentRepository;
 
-     private final CourseMapper courseMapper;
-     
-     
+    private final CourseMapper courseMapper;
 
 
     public CourseService(CourseRepository courseRepository, StudentRepository studentRepository,
@@ -45,13 +43,13 @@ public class CourseService {
         return courseDTOS;
     }
 
-    public CourseDTO findById(long id) {
+    public CourseDTO findById(long courseId) {
         CourseDTO courseDTO = new CourseDTO();
-        Course course = courseRepository.findById(id);
+        Course course = courseRepository.findById(courseId);
         if (course == null) {
             return null;
         }
-        courseDTO = courseMapper.mapCourseToCourseDTO(courseRepository.findById(id));
+        courseDTO = courseMapper.mapCourseToCourseDTO(courseRepository.findById(courseId));
         courseDTO.setStudentDTOS(getAllStudents(course));
         return courseDTO;
     }
@@ -67,15 +65,22 @@ public class CourseService {
         courseRepository.save(courseMapper.mapCourseDTOToCourse(courseDTO));
     }
 
-    public void deleteCourse(long id) {
-        courseRepository.deleteById(id);
+    public void updateCourse(long courseId, CourseDTO courseDTO){
+        courseDTO.setId(courseId);
+        courseRepository.save(courseMapper.mapCourseDTOToCourse(courseDTO));
     }
 
-    public void addStudentToCourse(long studentId, long subjectId) {
+    public void deleteCourse(long courseId) {
+        courseRepository.deleteById(courseId);
+    }
+
+
+    public void addStudentToCourse(long studentId, long courseId) {
         Enrollment enrollment = new Enrollment();
         enrollment.setStudent(studentRepository.findById(studentId));
-        enrollment.setCourse(courseRepository.findById(subjectId));
+        enrollment.setCourse(courseRepository.findById(courseId));
         enrollmentRepository.save(enrollment);
+
     }
 
     public void addGradeToStudent(long studentId, long subjectId, Grade grade) {
@@ -83,7 +88,6 @@ public class CourseService {
         enrollment.setFinalGrade(grade);
         enrollmentRepository.save(enrollment);
     }
-
 
 
     private Set<StudentDTO> getAllStudents(Course course) {
@@ -97,18 +101,4 @@ public class CourseService {
         return studentDTOS;
     }
 
-/*    public Course mapSubjectDTOToSubject(CourseDTO courseDTO) {
-        Course course = new Course();
-        course.setName(courseDTO.getName());
-        course.setLecturer(courseDTO.getLecturer());
-        return course;
-    }
-
-    public CourseDTO mapSubjectToSubjectDTO(Course course) {
-        CourseDTO courseDTO = new CourseDTO();
-        courseDTO.setId(course.getId());
-        courseDTO.setName(course.getName());
-        courseDTO.setLectureDTO(course.getLecturer());
-        return courseDTO;
-    }*/
 }

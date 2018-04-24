@@ -49,13 +49,14 @@ public class StudentService {
         Set<String> courses = student.getEnrollments().stream()
                 .map(el-> el.getCourse().getName())
                 .collect(Collectors.toSet());
+        studentDTO.setCourseNames(courses);
         return studentDTO;
     }
 
     public Set<StudentDTO> findAllStudents() {
-        Iterable<Student> studentEntities = studentRepository.findAll();
+        Iterable<Student> students = studentRepository.findAll();
         Set<StudentDTO> studentDTOS = new HashSet<>();
-        studentEntities.forEach(student -> studentMapper.mapStudentToStudentDTO(student));
+        students.forEach(student -> studentMapper.mapStudentToStudentDTO(student));
         return studentDTOS;
     }
 
@@ -69,6 +70,10 @@ public class StudentService {
 
 
     public void saveStudent(StudentDTO studentDTO) {
+        studentRepository.save(studentMapper.mapStudentDTOToStudent(studentDTO));
+    }
+    public void updateStudent(long studentId, StudentDTO studentDTO){
+        studentDTO.setId(studentId);
         studentRepository.save(studentMapper.mapStudentDTOToStudent(studentDTO));
     }
 
@@ -85,35 +90,5 @@ public class StudentService {
         student.getEnrollments().add(enrollment);
         enrollmentRepository.save(enrollment);
     }
-
-    private Set<EnrollmentDTO> getAllCourses(long studentId) {
-        Student student = studentRepository.findById(studentId);
-        Set<EnrollmentDTO> enrollmentDTOS = new HashSet<>();
-        student.getEnrollments().forEach(el -> {
-            EnrollmentDTO enrollmentDTO = new EnrollmentDTO();
-            enrollmentDTO.setGrade(el.getFinalGrade());
-            enrollmentDTO.setCourseName(el.getCourse().getName());
-            enrollmentDTO.setStudentFirstName(el.getStudent().getFirstName());
-            enrollmentDTO.setStudentLastName(el.getStudent().getLastName());
-            enrollmentDTOS.add(enrollmentDTO);
-        });
-        return enrollmentDTOS;
-    }
-
-/*    public Student mapStudentDTOToStudent(StudentDTO studentDTO) {
-        Student student = new Student();
-        student.setId(studentDTO.getId());
-        student.setFirstName(studentDTO.getFirstName());
-        student.setLastName(studentDTO.getLastName());
-        return student;
-    }
-
-    public StudentDTO mapStudentToStudentDTO(Student student) {
-        StudentDTO studentDTO = new StudentDTO();
-        studentDTO.setFirstName(student.getFirstName());
-        studentDTO.setLastName(student.getLastName());
-        return studentDTO;
-    }*/
-
 
 }

@@ -12,7 +12,7 @@ public interface AttendanceRepository extends CrudRepository<Attendance, Long> {
 
     Attendance findById(long id);
 
-    Attendance saveAttendance(Attendance attendance);
+    Attendance save(Attendance attendance);
 
     Attendance findByStudentIdAndLectureId(long studentId, long courseId);
 

@@ -6,7 +6,7 @@ import students.presence.list.model.Lecture;
 
 @Component
 public class LectureMapper {
-    public Lecture LectureDTOtoLecture(LectureDTO lectureDTO){
+    public Lecture mapLectureDTOtoLecture(LectureDTO lectureDTO){
         Lecture lecture = new Lecture();
         lecture.setDate(lectureDTO.getDate());
         lecture.setName(lectureDTO.getName());
@@ -14,8 +14,11 @@ public class LectureMapper {
         return lecture;
     }
 
-    public LectureDTO LectureToLectureDTO(Lecture lecture){
+    public LectureDTO mapLectureToLectureDTO(Lecture lecture){
         LectureDTO lectureDTO = new LectureDTO();
+        lectureDTO.setName(lecture.getName());
+        lectureDTO.setDate(lecture.getDate());
+        lectureDTO.setCourseName(lecture.getCourse().getName());
         return lectureDTO;
     }
 }

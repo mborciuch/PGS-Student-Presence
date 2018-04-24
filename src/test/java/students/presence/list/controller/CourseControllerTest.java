@@ -2,7 +2,6 @@ package students.presence.list.controller;
 
 import students.presence.list.dto.CourseDTO;
 import students.presence.list.dto.StudentDTO;
-import students.presence.list.model.Grade;
 import students.presence.list.model.Lecturer;
 import students.presence.list.repositories.StudentRepository;
 import students.presence.list.repositories.CourseRepository;
@@ -11,25 +10,16 @@ import students.presence.list.service.CourseService;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Before;
-import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
-import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-
-import java.util.HashSet;
 import java.util.Set;
 
-import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(MockitoJUnitRunner.Silent.class)
 public class CourseControllerTest {
@@ -80,7 +70,7 @@ public class CourseControllerTest {
 
 
     @InjectMocks
-    SubjectController subjectController;
+    CourseController courseController;
 
 
     MockMvc mockMvc;
@@ -129,7 +119,7 @@ public class CourseControllerTest {
     }
 
     @Test
-    public void getAllSubjects() throws Exception {
+    public void getAllCourses() throws Exception {
 
         //Given
         when(courseService.findAllSubjects()).thenReturn(courseDTOS);
@@ -141,7 +131,7 @@ public class CourseControllerTest {
     }
 
     @Test
-    public void getSubjectById() throws Exception {
+    public void getCourseById() throws Exception {
         //Given
         when(courseService.findById(ID_1)).thenReturn(courseDTOFirst);
 
@@ -152,7 +142,7 @@ public class CourseControllerTest {
     }
 
     @Test
-    public void getSubjectByName() throws Exception {
+    public void getCourseByName() throws Exception {
         //Given
         Set<CourseDTO> subjectByName = new HashSet<>();
         subjectByName.add(courseDTOFirst);
@@ -165,7 +155,7 @@ public class CourseControllerTest {
     }
 
     @Test
-    public void deleteSubject() throws Exception {
+    public void deleteCourse() throws Exception {
         mockMvc.perform(delete(SubjectController.BASE_URL + "/1"))
                 .andExpect(status().isNoContent());
     }

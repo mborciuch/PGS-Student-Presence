@@ -14,7 +14,5 @@ public interface CourseRepository extends CrudRepository<Course, Long> {
 
     Course save(Course course);
 
-    void deleteByName(String name);
-
 
 }

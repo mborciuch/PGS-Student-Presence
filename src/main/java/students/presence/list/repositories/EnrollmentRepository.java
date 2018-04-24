@@ -9,5 +9,5 @@ public interface EnrollmentRepository extends CrudRepository<Enrollment, Long> {
 
     Enrollment findByStudentIdAndCourseId(long studentId, long subjectId);
 
-    Enrollment findByStudentIdAndSubjectId(long studentId, long subjectId);
+
 }

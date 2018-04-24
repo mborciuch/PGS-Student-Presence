@@ -1,6 +1,8 @@
 package students.presence.list.service;
 
 import students.presence.list.dto.StudentDTO;
+import students.presence.list.mapper.CourseMapper;
+import students.presence.list.mapper.StudentMapper;
 import students.presence.list.model.Student;
 import students.presence.list.model.Enrollment;
 import students.presence.list.model.Course;
@@ -15,6 +17,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 
 import static org.junit.Assert.*;
@@ -25,9 +28,24 @@ import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class StudentServiceTest {
+
     public static final long ID_1 = 1l;
+
+    public static final long ID_2 = 2l;
+
     public static final String STUDENT1_FIRST_NAME = "Jan";
+
     public static final String STUDENT1_LAST_NAME = "Kowalski";
+
+    public static final String STUDENT1_EMAIL = "example@gmail.com";
+
+    public static final String STUDENT2_FIRST_NAME = "Adrian";
+
+    public static final String STUDENT2_LAST_NAME = "Nowak";
+
+    public static final String STUDENT2_EMAIL = "example2@gmail.com";
+
+
     @Autowired
     StudentService studentService;
 
@@ -40,36 +58,54 @@ public class StudentServiceTest {
     @Mock
     EnrollmentRepository enrollmentRepository;
 
+    @Mock
+    StudentMapper studentMapper;
+
+    @Mock
+    CourseMapper courseMapper;
+
+    private Student studentFirst;
+
+    private Student studentSecond;
 
 
     @Before
     public void setUp() throws Exception {
-/*
 
         studentService = new StudentService(
-                studentRepository, courseRepository, enrollmentRepository
+                studentRepository, courseRepository, enrollmentRepository, studentMapper, courseMapper
         );
+
+        studentFirst = new Student();
+        studentFirst.setId(ID_1);
+        studentFirst.setFirstName(STUDENT1_FIRST_NAME);
+        studentFirst.setLastName(STUDENT1_LAST_NAME);
+        studentFirst.setEmail(STUDENT1_EMAIL);
+
+
+        studentSecond = new Student();
+        studentSecond.setId(ID_2);
+        studentSecond.setFirstName(STUDENT2_FIRST_NAME);
+        studentSecond.setLastName(STUDENT2_LAST_NAME);
+        studentSecond.setFirstName(STUDENT2_EMAIL);
     }
-    @Test
+
+ /*   @Test
     public void findAllStudents() throws Exception {
 
         //Given
-        Student studentFirst = new Student();
-        Student studentSecond = new Student();
-        Set<Student> studentEntities = new HashSet<>();
-        studentEntities.add(studentFirst);
-        studentEntities.add(studentSecond);
+        Set<Student> students = new HashSet<>();
+        students.add(studentFirst);
+        students.add(studentSecond);
 
-
-        when(studentRepository.findAll()).thenReturn(studentEntities);
+        when(studentRepository.findAll()).thenReturn(students);
 
         //When
         Set<StudentDTO> studentDTOS = studentService.findAllStudents();
 
         //Then
-        assertEquals(1, studentDTOS.size());
-        verify(studentRepository,times(1)).findAll();
-
+        assertEquals(2, studentDTOS.size());
+        verify(studentRepository, times(1)).findAll();
 
     }
 
@@ -87,27 +123,29 @@ public class StudentServiceTest {
 
         //Then
         assertEquals(ID_1, studentDTO.getId());
-        verify(studentRepository,times(2)).findById(ID_1);
+        verify(studentRepository, times(2)).findById(ID_1);
     }
 
     @Test
     public void findByFirstNameAndLastName() throws Exception {
         //Given
-        Student student = new Student();
-        student.setId(ID_1);
-        student.setFirstName(STUDENT1_FIRST_NAME);
-        student.setLastName(STUDENT1_LAST_NAME);
-
-        when(studentRepository.findByFirstNameAndLastName(STUDENT1_FIRST_NAME,STUDENT1_LAST_NAME)).thenReturn(student);
+        Set<Student> students = new HashSet<>();
+        students.add(studentFirst);
+        when(studentRepository.findByFirstNameAndLastName(STUDENT1_FIRST_NAME, STUDENT1_LAST_NAME)).thenReturn(students);
 
         //When
-        StudentDTO studentDTO = studentService.findByFirstNameAndLastName(STUDENT1_FIRST_NAME,STUDENT1_LAST_NAME);
+        Set<StudentDTO> studentDTOS = studentService.findByFirstNameAndLastName(STUDENT1_FIRST_NAME, STUDENT1_LAST_NAME);
+        StudentDTO studentDTO = null;
+        for (Iterator<StudentDTO> it = studentDTOS.iterator(); it.hasNext();) {
+            studentDTO = it.next();
+            break;
+        }
 
         //Then
-        assertEquals(ID_1, student.getId());
-        assertEquals(STUDENT1_FIRST_NAME, student.getFirstName());
-        assertEquals(STUDENT1_LAST_NAME, student.getLastName());
-        verify(studentRepository,times(2)).findByFirstNameAndLastName(STUDENT1_FIRST_NAME,STUDENT1_LAST_NAME);
+        assertEquals(ID_1, studentDTO.getId());
+        assertEquals(STUDENT1_FIRST_NAME, studentDTO.getFirstName());
+        assertEquals(STUDENT1_LAST_NAME, studentDTO.getLastName());
+        verify(studentRepository, times(2)).findByFirstNameAndLastName(STUDENT1_FIRST_NAME, STUDENT1_LAST_NAME);
     }
 
     @Test
@@ -124,7 +162,7 @@ public class StudentServiceTest {
         studentService.saveStudent(studentDTO);
 
         //Then
-        verify(studentRepository,times(1)).save(student);
+        verify(studentRepository, times(1)).save(student);
     }
 
     @Test
@@ -137,7 +175,8 @@ public class StudentServiceTest {
     }
 
     @Test
-    public void addSubject() throws Exception{
+    public void addSubject() throws Exception {
+
         //Given
         Student student = new Student();
         student.setId(ID_1);
@@ -151,13 +190,13 @@ public class StudentServiceTest {
 
         when(studentRepository.findById(ID_1)).thenReturn(student);
         when(courseRepository.findById(ID_1)).thenReturn(course);
+
         //When
         studentService.enrollStudentToCourse(course.getId(), student.getId());
 
         //Then
-        verify(enrollmentRepository, times(1)).save(any());*/
+        verify(enrollmentRepository, times(1)).save(any());
     }
-
-
+*/
 
 }

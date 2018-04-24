@@ -50,7 +50,7 @@ public class AttendanceService {
         Lecture lecture = lectureRepository.findById(lectureId);
         attendance.setStudent(student);
         attendance.setLecture(lecture);
-        attendanceRepository.saveAttendance(attendance);
+        attendanceRepository.save(attendance);
     }
     //ToDo
     //Tylko te co się nie odbyły
